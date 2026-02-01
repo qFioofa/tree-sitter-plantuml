@@ -1,0 +1,9 @@
+Cargo.lock
+Cargo.toml
+target/
+binding.gyp
+bindings/
+build/
+node_modules/
+src/
+*.wasm

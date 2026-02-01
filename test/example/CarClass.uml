@@ -1,0 +1,7 @@
+@startuml
+class Car {
+  name : string
+  start() : void
+}
+note left: "This is a car"
+@enduml

@@ -1,0 +1,18 @@
+{
+  "name": "tree-sitter-plantuml",
+  "version": "0.0.1",
+  "description": "PlantUML grammar for tree-sitter",
+  "scripts": {
+    "install": "tree-sitter generate && node-gyp rebuild",
+    "gen": "tree-sitter generate",
+    "compile:node": "node-gyp build",
+    "build": "tree-sitter generate && node-gyp build"
+  },
+  "dependencies": {
+    "nan": "^2.14.2"
+  },
+  "devDependencies": {
+    "tree-sitter-cli": "^0.19.4"
+  },
+  "main": "bindings/node"
+}
