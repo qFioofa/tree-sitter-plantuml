@@ -1,5 +1,6 @@
 {
   "name": "plantuml",
+  "word": "identifier",
   "rules": {
     "source_file": {
       "type": "REPEAT",
@@ -106,7 +107,7 @@
         },
         {
           "type": "SYMBOL",
-          "name": "divider"
+          "name": "link"
         }
       ]
     },
@@ -138,8 +139,8 @@
           "type": "CHOICE",
           "members": [
             {
-              "type": "SYMBOL",
-              "name": "abstract_keyword"
+              "type": "STRING",
+              "value": "abstract"
             },
             {
               "type": "BLANK"
@@ -167,10 +168,6 @@
           ]
         }
       ]
-    },
-    "abstract_keyword": {
-      "type": "STRING",
-      "value": "abstract"
     },
     "class_body": {
       "type": "SEQ",
@@ -463,9 +460,22 @@
         }
       ]
     },
-    "divider": {
-      "type": "PATTERN",
-      "value": "={2,}"
+    "link": {
+      "type": "SEQ",
+      "members": [
+        {
+          "type": "SYMBOL",
+          "name": "identifier"
+        },
+        {
+          "type": "SYMBOL",
+          "name": "arrow"
+        },
+        {
+          "type": "SYMBOL",
+          "name": "identifier"
+        }
+      ]
     }
   },
   "extras": [

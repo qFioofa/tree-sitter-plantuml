@@ -6,6 +6,8 @@ module.exports = grammar({
 		$.comment,
 	],
 
+	word: $ => $.identifier,
+
 	rules: {
 		source_file: $ => repeat(choice(
 			$.diagram_block,
@@ -34,7 +36,7 @@ module.exports = grammar({
 			$.string,
 			$.identifier,
 			$.arrow,
-			$.divider
+			$.link
 		),
 
 		standalone_statement: $ => choice(
@@ -44,15 +46,12 @@ module.exports = grammar({
 			$.identifier
 		),
 
-		// Класс
 		class_declaration: $ => seq(
-			optional($.abstract_keyword),
+			optional('abstract'),
 			'class',
 			$.identifier,
 			optional($.class_body)
 		),
-
-		abstract_keyword: $ => 'abstract',
 
 		class_body: $ => seq(
 			'{',
@@ -60,13 +59,11 @@ module.exports = grammar({
 			'}'
 		),
 
-		// Члены класса - исправлено!
 		class_member: $ => choice(
 			$.field_declaration,
 			$.method_declaration
 		),
 
-		// Объявление поля: name : type
 		field_declaration: $ => seq(
 			optional($.visibility),
 			$.identifier,
@@ -74,7 +71,6 @@ module.exports = grammar({
 			$.type_name
 		),
 
-		// Объявление метода: name() : return_type
 		method_declaration: $ => seq(
 			optional($.visibility),
 			$.identifier,
@@ -82,10 +78,8 @@ module.exports = grammar({
 			optional(seq(':', $.type_name))
 		),
 
-		// Тип (простой идентификатор или составной)
 		type_name: $ => $.identifier,
 
-		// Видимость
 		visibility: $ => choice('+', '-', '#', '~'),
 
 		object_declaration: $ => seq('object', $.identifier),
@@ -109,6 +103,6 @@ module.exports = grammar({
 
 		arrow: $ => choice('->', '-->', '<-', '<--'),
 
-		divider: $ => /={2,}/,
+		link: $ => seq($.identifier, $.arrow, $.identifier)
 	}
 });
