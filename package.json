@@ -3,7 +3,8 @@
 	"version": "0.0.1",
 	"description": "PlantUML grammar for tree-sitter",
 	"scripts": {
-		"generate": "npx tree-sitter generate"
+		"generate": "npx tree-sitter generate",
+		"test": "npx tree-sitter test"
 	},
 	"dependencies": {
 		"nan": "^2.14.2"

@@ -1,0 +1,102 @@
+==================
+Single-line comment
+==================
+' This is a comment
+---
+(program (comment (comment_line)))
+
+==================
+Single-line comment with no content
+==================
+'
+---
+(program (comment (comment_line)))
+
+==================
+Single-line comment at the end of line
+==================
+A --> B ' Connection comment
+---
+(program (comment (comment_line)))
+
+==================
+Block comment
+==================
+/' This is a
+multi-line
+comment '/
+---
+(program (comment (comment_block)))
+
+==================
+Block comment with no content
+==================
+/' '/
+---
+(program (comment (comment_block)))
+
+==================
+Block comment with special characters
+==================
+/' Comment with !@#$%^&*()_+ special characters
+and numbers 1234567890 '/
+---
+(program (comment (comment_block)))
+
+==================
+Block comment with PlantUML syntax inside
+==================
+/' This is not a real
+@startuml
+class Example {
+  +method()
+}
+@enduml
+comment '/
+---
+(program (comment (comment_block)))
+
+==================
+Multiple comments
+==================
+' First comment
+/' Second comment
+with multiple lines
+'/
+' Third comment
+---
+(program (comment (comment_line)) (comment (comment_block)) (comment (comment_line)))
+
+==================
+Nested single quotes in block comment
+==================
+/' This is a block comment
+with ' inside it
+'/
+---
+(program (comment (comment_block)))
+
+==================
+Comment with trailing whitespace
+==================
+' This comment has trailing spaces    
+---
+(program (comment (comment_line)))
+
+==================
+Empty file with just a comment
+==================
+'
+---
+(program (comment (comment_line)))
+
+==================
+Block comment with empty lines
+==================
+/' First line
+
+Third line with content
+
+Last line '/
+---
+(program (comment (comment_block)))
