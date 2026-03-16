@@ -1,0 +1,175 @@
+================================================================================
+Diagram Block Tests
+================================================================================
+
+==================
+Simple diagram block
+==================
+@startuml
+@enduml
+---
+(program (diagram (diagram_start) (diagram_end)))
+
+==================
+Diagram block with name
+==================
+@startuml MyDiagram
+@enduml
+---
+(program (diagram (diagram_start) (diagram_end)))
+
+==================
+Diagram block with content on separate lines
+==================
+@startuml
+class Foo {
+}
+@enduml
+---
+(program (diagram (diagram_start) (class_definition (class_keyword) (class_name) (class_body)) (diagram_end)))
+
+==================
+Multiple diagram blocks
+==================
+@startuml First
+@enduml
+@startuml Second
+@enduml
+---
+(program (diagram (diagram_start) (diagram_end)) (diagram (diagram_start) (diagram_end)))
+
+==================
+Diagram with comment inside
+==================
+@startuml
+' This is a comment
+@enduml
+---
+(program (diagram (diagram_start) (comment (comment_line)) (diagram_end)))
+
+==================
+Diagram with string
+==================
+@startuml
+"Hello World"
+@enduml
+---
+(program (diagram (diagram_start) (string) (diagram_end)))
+
+==================
+Diagram with title
+==================
+@startuml
+title My Title
+@enduml
+---
+(program (diagram (diagram_start) (title_inline) (diagram_end)))
+
+==================
+Diagram with skinparam
+==================
+@startuml
+skinparam backgroundColor red
+@enduml
+---
+(program (diagram (diagram_start) (style (style_inline (skinparam_keyword) (skinparam_name) (skinparam_value))) (diagram_end)))
+
+==================
+Diagram with class definition
+==================
+@startuml
+class Foo {
+}
+@enduml
+---
+(program (diagram (diagram_start) (class_definition (class_keyword) (class_name) (class_body)) (diagram_end)))
+
+==================
+Diagram with object definition
+==================
+@startuml
+object Foo
+@enduml
+---
+(program (diagram (diagram_start) (object_definition (object_keyword) (object_name)) (diagram_end)))
+
+==================
+Diagram with activity keyword
+==================
+@startuml
+start
+@enduml
+---
+(program (diagram (diagram_start) (keyword) (diagram_end)))
+
+==================
+Diagram with sequence divider
+==================
+@startuml
+====
+@enduml
+---
+(program (diagram (diagram_start) (sequence (sequence_divider)) (diagram_end)))
+
+==================
+Diagram with state concurrent
+==================
+@startuml
+--
+@enduml
+---
+(program (diagram (diagram_start) (state (state_concurrent)) (diagram_end)))
+
+==================
+Diagram with preprocessing
+==================
+@startuml
+!include common.iuml
+@enduml
+---
+(program (diagram (diagram_start) (preprocessing) (diagram_end)))
+
+==================
+Diagram with color
+==================
+@startuml
+#FF0000
+@enduml
+---
+(program (diagram (diagram_start) (color) (diagram_end)))
+
+==================
+Diagram with identifier
+==================
+@startuml
+foo_bar
+@enduml
+---
+(program (diagram (diagram_start) (identifier) (diagram_end)))
+
+==================
+Diagram with note
+==================
+@startuml
+note left: This is a note
+@enduml
+---
+(program (diagram (diagram_start) (note_inline) (diagram_end)))
+
+==================
+Diagram with caption
+==================
+@startuml
+caption This is a caption
+@enduml
+---
+(program (diagram (diagram_start) (caption) (diagram_end)))
+
+==================
+Diagram with hide
+==================
+@startuml
+hide empty fields
+@enduml
+---
+(program (diagram (diagram_start) (hide_show_remove) (diagram_end)))

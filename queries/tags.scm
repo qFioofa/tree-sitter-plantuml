@@ -1,24 +1,63 @@
-; Diagram definitions
-(diagram_block (name) @definition.diagram)
+; PlantUML Tree-sitter Tags Queries
+; Defines symbol tags for navigation and outline views
 
-; Function definitions (titles)
-(title_single (content) @definition.function)
-(title_multi_start (content) @definition.function)
+; ==================== CLASS DEFINITIONS ====================
+(class_definition
+  (class_name) @definition.class)
 
-; Type definitions (classes, enums)
-(class_group_start (name) @definition.type)
-(class_group_start (alias) @definition.type)
+; ==================== OBJECT DEFINITIONS ====================
+(object_definition
+  (object_name) @definition.object)
 
-; Variable definitions (objects, class members)
-(object_add_fields (identifier) @definition.variable)
-(class_function (name) @definition.function)
-(class_field (name) @definition.variable)
-(note_as (variable) @definition.variable)
+; ==================== CLASS MEMBERS ====================
+(class_body
+  (class_function
+    name: (_) @definition.method))
 
-; References (actors, participants, etc.)
-(general_element (actor) @reference)
-(general_element (identifier) @reference)
-(sequence_ref_inline (participants) @reference)
-(sequence_ref_multiline_start (participants) @reference)
-(note_of_inline (participants) @reference)
-(note_of_multiline_start (participants) @reference)
+(class_body
+  (class_field
+    name: (_) @definition.field))
+
+; ==================== ALIASES ====================
+(class_alias
+  (_) @definition.alias)
+
+(object_definition
+  "as" @keyword
+  (_) @definition.alias)
+
+; ==================== TITLES ====================
+(title_inline) @definition.title
+
+(title_multiline) @definition.title
+
+; ==================== NOTES ====================
+(note_inline) @definition.note
+
+(note_multiline) @definition.note
+
+(note_as
+  (_) @definition.note)
+
+; ==================== CAPTIONS ====================
+(caption) @definition.caption
+
+; ==================== HEADERS / LEGENDS / FOOTERS ====================
+(header_inline) @definition.header
+
+(header_multiline) @definition.header
+
+; ==================== REFERENCES ====================
+; References in notes
+(note_of_inline
+  (_) @reference)
+
+(note_of_multiline
+  (_) @reference)
+
+; Sequence references
+(sequence_ref_inline
+  (_) @reference)
+
+(sequence_ref_block
+  (_) @reference)

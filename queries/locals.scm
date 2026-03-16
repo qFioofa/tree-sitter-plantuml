@@ -1,28 +1,67 @@
-; locals.scm
+; PlantUML Tree-sitter Local Queries
+; Defines local variable scoping for PlantUML
 
-; Define scopes for variable definitions and references within diagrams
-(scope) @local.scope
+; ==================== DIAGRAM BLOCKS ====================
+; Each diagram block creates its own scope
+(diagram) @local.scope
 
-; Diagram blocks create a new scope
-(diagram_block) @local.scope
+; ==================== CLASS DEFINITIONS ====================
+; Class definitions create a scope for their members
+(class_definition) @local.scope
 
-; Class definitions introduce member variables and methods
-(class_group_start
-  (name) @local.definition.type
-  (alias)? @local.definition.type
-  .
-  (class_body)? @local.scope)
+; Class members are local to the class
+(class_body
+  (class_function
+    name: (_) @local.definition))
 
-; Members inside class body
-(class_function (name) @local.definition.function)
-(class_field (name) @local.definition.variable)
+(class_body
+  (class_field
+    name: (_) @local.definition))
 
-; Object definitions introduce instance variables
-(object_add_fields (identifier) @local.definition.variable)
+; ==================== OBJECT DEFINITIONS ====================
+; Object definitions create a scope
+(object_definition) @local.scope
 
-; General identifiers used as variables/actors
-(general_element (actor) @local.reference)
-(general_element (identifier) @local.reference)
+(object_name) @local.definition
 
-; Links might reference actors/elements defined elsewhere in the diagram scope
-(link) @local.reference
+; ==================== NOTES WITH REFERENCES ====================
+; Notes that reference elements
+(note_of_inline
+  (_) @local.reference)
+
+(note_of_multiline
+  (_) @local.reference)
+
+; ==================== SEQUENCE REFERENCES ====================
+; References to lifelines/participants
+(sequence_ref_inline
+  (_) @local.reference)
+
+(sequence_ref_block
+  (_) @local.reference)
+
+; ==================== ACTIVITY REFERENCES ====================
+; Labels and goto references
+(activity_if
+  (_) @local.reference)
+
+(activity_else
+  (_) @local.reference)
+
+(activity_while
+  (_) @local.reference)
+
+; ==================== ALIASES ====================
+; Class aliases
+(class_alias
+  (_) @local.definition)
+
+; Object aliases
+(object_definition
+  "as" @keyword
+  (_) @local.definition)
+
+; Note aliases
+(note_as
+  "as" @keyword
+  (_) @local.definition)

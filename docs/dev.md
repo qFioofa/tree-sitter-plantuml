@@ -1,14 +1,39 @@
 # Development
 
-## Install tree sitter cli
+## Setup
 
 ```bash
 npm install
 ```
 
-## Use tree sitter cli
+## Commands
 
-- `npm run generate` rebuilds all parser.
-- `npx tree-sitter test` runs all tests for both parsers.
-- `npx tree-sitter parse $file` run the `fsharp` parser on `$file` and outputs the parse tree.
-- `npx tree-sitter parse -d $file` run the `fsharp` parser on `$file` and prints debug information.
+| Command | Description |
+|---------|-------------|
+| `npm run generate` | Generate parser from grammar.js |
+| `npm test` | Run all tests |
+| `npx tree-sitter parse <file>` | Parse a file and show syntax tree |
+
+## Adding Tests
+
+1. Add tests to `test/corpus/*.txt`
+2. Format:
+   ```
+   ==================
+   Test name
+   ==================
+   input code
+   ---
+   (expected S-expression)
+   ```
+3. Run `npm test`
+
+## Project Structure
+
+```
+├── grammar.js          # Grammar definition
+├── src/                # Generated parser
+├── test/corpus/        # Tests
+├── queries/            # Highlight/local queries
+└── bindings/           # Language bindings
+```

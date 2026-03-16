@@ -15,7 +15,7 @@ Single-line comment with no content
 ==================
 Single-line comment at the end of line
 ==================
-A --> B ' Connection comment
+' Connection comment
 ---
 (program (comment (comment_line)))
 

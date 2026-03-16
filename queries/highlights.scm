@@ -1,157 +1,243 @@
-; Main diagram elements
-(diagram_block) @keyword
-(diagram_block (keyword_control_diagram) @keyword)
-(diagram_block (name) @function)
+; PlantUML Tree-sitter Highlight Queries
+; Comprehensive highlighting for all PlantUML grammar constructs
 
-; Comments
+; ==================== COMMENTS ====================
 (comment_line) @comment
-(comment_block) @comment)
+(comment_block) @comment
 
-; Styles
-(style_inline (keyword) @keyword)
-(style_inline (keyword) @property)
-(style_inline (stereotype) @type)
-(style_inline (value) @string)
+; ==================== DIAGRAM BLOCKS ====================
+(diagram_start) @keyword
+(diagram_end) @keyword
 
-(style_block (keyword) @keyword)
-(style_block (keyword) @property)
-(style_block (stereotype) @type)
+; ==================== STRINGS ====================
+(string) @string
+(quoted_definition) @string
 
-; Keywords
-(keyword_linebegin) @keyword
-(keyword_wholeline) @keyword
-(keyword_other) @keyword
+; ==================== CLASS DEFINITIONS ====================
+(class_definition
+  (class_keyword) @keyword)
 
-; Titles
-(title_single (content) @function)
-(title_multi_start (content) @function)
-(title_single (keyword_control_title) @keyword)
-(title_multi_start (keyword_control_title) @keyword)
+(class_name) @type
 
-; Scale
-(scale (keyword_scale) @keyword)
-(scale (number) @number)
-(scale (second_number) @number)
+(class_stereotype) @constant
 
-; Caption
-(caption (keyword_caption) @keyword)
-(caption (content) @text)
+(class_alias
+  "as" @keyword)
 
-; Notes
-(note_inline (content) @comment)
-(note_inline (keyword_note) @keyword)
+(class_color) @constant
 
-(note_multiline_start (content) @comment)
-(note_multiline_start (keyword_note) @keyword)
+(class_body) @punctuation.bracket
 
-(note_of_inline (keyword_note) @keyword)
-(note_of_inline (participants) @variable)
-(note_of_inline (color) @number)
-(note_of_inline (content) @comment)
+(class_separator) @punctuation.delimiter
 
-(note_of_multiline_start (keyword_note) @keyword)
-(note_of_multiline_start (participants) @variable)
-(note_of_multiline_start (color) @number)
-(note_of_multiline_start (content) @comment)
+(class_function
+  name: (_) @function)
 
-(note_as (keyword_note) @keyword)
-(note_as (content) @comment)
-(note_as (variable) @variable)
+(class_field
+  name: (_) @variable)
 
-; Header, legend, footer
-(header_legend_footer_single (position) @type)
-(header_legend_footer_single (keyword_header_legend_footer) @keyword)
-(header_legend_footer_single (content) @comment)
+(class_modifier) @keyword.modifier
+  "static" @keyword.modifier
+  "abstract" @keyword.modifier
 
-(header_legend_footer_multi_start (position) @type)
-(header_legend_footer_multi_start (keyword_header_legend_footer) @keyword)
-(header_legend_footer_multi_start (content) @comment)
+(class_visibility) @keyword.operator
+  "+" @keyword.operator
+  "-" @keyword.operator
+  "#" @keyword.operator
+  "~" @keyword.operator
 
-; Preprocessing
-(preprocessing) @function
+; ==================== OBJECT DEFINITIONS ====================
+(object_keyword) @keyword
 
-; Links
-(link) @operator
-(link (color) @number)
-(link (direction) @constant)
+(object_name) @type
 
-; Actors and messages
-(general_element (actor) @variable)
-(general_element (message) @comment)
+; ==================== ACTIVITY DIAGRAMS ====================
+(activity_if
+  "if" @keyword.conditional
+  "else if" @keyword.conditional)
 
-; Colors
-(general_element (color) @number)
+(activity_else
+  "else" @keyword.conditional)
 
-; Variables
-(general_element (identifier) @variable)
+(activity_while
+  "while" @keyword.repeat
+  "repeat" @keyword.repeat)
 
-; Quotes
-(quoted_string (content) @string)
+(activity_endwhile
+  "end" @keyword.conditional)
 
-; Conditions
-(activity_if (condition) @string)
-(activity_if (then_part) @comment)
-(activity_if) @keyword
+; ==================== SEQUENCE DIAGRAMS ====================
+(sequence_divider) @punctuation.delimiter
 
-(activity_else (else_part) @comment)
-(activity_else) @keyword
+(sequence_ref_inline
+  "ref over" @keyword)
 
-(activity_while (condition) @string)
-(activity_while (is_part) @comment)
-(activity_while) @keyword
+(sequence_ref_block
+  "ref over" @keyword
+  "end ref" @keyword)
 
-(activity_endwhile (end_part) @comment)
-(activity_endwhile) @keyword
+(sequence_delay) @punctuation.special
 
-; Sequence
-(sequence_divider (content) @string)
-(sequence_divider (divider) @operator)
+(sequence_space) @punctuation.special
 
-(sequence_omission) @operator
+; ==================== STATE DIAGRAMS ====================
+(state_concurrent) @punctuation.delimiter
 
-(sequence_ref_inline (participants) @variable)
-(sequence_ref_inline (content) @comment)
-(sequence_ref_inline) @keyword
+; ==================== KEYWORDS ====================
+(keyword) @keyword
 
-(sequence_ref_multiline_start (participants) @variable)
-(sequence_ref_multiline_start (content) @comment)
-(sequence_ref_multiline_start) @keyword
+; Activity flow keywords
+(keyword) @keyword.conditional
+  "if"
+  "else"
+  "switch"
+  "case"
+  "endif"
+  "endswitch"
 
-(sequence_delay (content) @comment)
-(sequence_delay (delay) @operator)
+(keyword) @keyword.repeat
+  "while"
+  "repeat"
+  "endwhile"
+  "fork"
+  "end fork"
+  "split"
+  "end split"
 
-(sequence_space (number) @number)
-(sequence_space (space) @operator)
+(keyword) @keyword.flow
+  "start"
+  "stop"
+  "end"
+  "detach"
+  "goto"
+  "backward"
+  "diamond"
 
-; States
-(state_concurrent) @keyword
+; Sequence keywords
+(keyword) @keyword
+  "activate"
+  "deactivate"
+  "return"
+  "destroy"
+  "autonumber"
+  "newpage"
+  "alt"
+  "opt"
+  "loop"
+  "par"
+  "break"
+  "critical"
+  "group"
+  "box"
+  "end box"
+  "kill"
+  "end merge"
 
-; Objects
-(object_add_fields (identifier) @variable)
+; Direction keywords
+(keyword) @keyword
+  "top to bottom direction"
+  "left to right direction"
 
-; Classes
-(class_group_start (name) @variable)
-(class_group_start (alias) @variable)
-(class_group_start) @keyword
+; ==================== STYLE / SKINPARAM ====================
+(style_inline) @keyword
 
-(class_separator (content) @string)
-(class_separator) @comment
+(style_block) @keyword
 
-(class_function (return_type) @type)
-(class_function (name) @variable)
-(class_function (type) @type)
-(class_function (modifier) @modifier)
-(class_function (access) @keyword)
+; ==================== TITLES AND CAPTIONS ====================
+(title_inline) @text.title
+  "title" @keyword
 
-(class_field (type) @type)
-(class_field (name) @variable)
-(class_field (modifier) @modifier)
-(class_field (access) @keyword)
+(title_multiline) @text.title
+  "title" @keyword
+  "end title" @keyword
 
-(class_other (content) @string)
-(class_other (modifier) @modifier)
-(class_other (access) @keyword)
+(caption) @text.note
+  "caption" @keyword
 
-(class_hide_show (action) @keyword)
-(class_hide_show (target) @variable)
-(class_hide_show (detail) @type)
+; ==================== NOTES ====================
+(note_inline) @text.note
+  "note" @keyword
+
+(note_multiline) @text.note
+  "note" @keyword
+  "end note" @keyword
+
+(note_of_inline) @text.note
+  "note" @keyword
+
+(note_of_multiline) @text.note
+  "note" @keyword
+  "end note" @keyword
+
+(note_as) @text.note
+  "note" @keyword
+  "as" @keyword
+
+; ==================== HEADERS / LEGENDS / FOOTERS ====================
+(header_inline) @text.note
+  "header" @keyword
+  "legend" @keyword
+  "footer" @keyword
+
+(header_multiline) @text.note
+  "header" @keyword
+  "legend" @keyword
+  "footer" @keyword
+  "end header" @keyword
+  "end legend" @keyword
+  "end footer" @keyword
+
+; ==================== SCALE ====================
+(scale) @keyword
+  "scale" @keyword
+  "max" @keyword
+  "width" @keyword
+  "height" @keyword
+
+; ==================== PREPROCESSING ====================
+(preprocessing) @preproc
+  "!include" @preproc
+  "!includesub" @preproc
+  "!define" @preproc
+  "!definelong" @preproc
+  "!enddefinelong" @preproc
+  "!ifdef" @preproc
+  "!ifndef" @preproc
+  "!else" @preproc
+  "!endif" @preproc
+  "!if" @preproc
+  "!elseif" @preproc
+  "!while" @preproc
+  "!endwhile" @preproc
+  "!startsub" @preproc
+  "!endsub" @preproc
+  "!procedure" @preproc
+  "!function" @preproc
+  "!end function" @preproc
+  "!end procedure" @preproc
+  "!return" @preproc
+  "!import" @preproc
+  "!includedef" @preproc
+  "!includeurl" @preproc
+  "!include_many" @preproc
+  "!include_once" @preproc
+  "!log" @preproc
+  "!dump_memory" @preproc
+  "!theme" @preproc
+  "!pragma" @preproc
+  "!assume transparent" @preproc
+
+; ==================== COLORS ====================
+(color) @constant
+
+; ==================== LINKS ====================
+(link) @keyword.operator
+
+; ==================== IDENTIFIERS ====================
+(identifier) @variable
+
+; ==================== HIDE/SHOW/REMOVE ====================
+(hide_show_remove) @keyword
+  "hide" @keyword
+  "show" @keyword
+  "remove" @keyword
