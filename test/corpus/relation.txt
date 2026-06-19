@@ -1,0 +1,75 @@
+================================================================================
+Relation Tests
+================================================================================
+
+==================
+Simple association
+==================
+@startuml
+Foo --> Bar
+@enduml
+---
+(program (diagram (diagram_start) (relation (identifier) (arrow) (identifier)) (diagram_end)))
+
+==================
+Relation with label
+==================
+@startuml
+Foo --> Bar : extends
+@enduml
+---
+(program (diagram (diagram_start) (relation (identifier) (arrow) (identifier) (relation_label)) (diagram_end)))
+
+==================
+Inheritance arrow
+==================
+@startuml
+A ..|> B
+@enduml
+---
+(program (diagram (diagram_start) (relation (identifier) (arrow) (identifier)) (diagram_end)))
+
+==================
+Composition arrow
+==================
+@startuml
+A *-- B
+@enduml
+---
+(program (diagram (diagram_start) (relation (identifier) (arrow) (identifier)) (diagram_end)))
+
+==================
+Colored arrow with label
+==================
+@startuml
+a -[#red]-> b : msg
+@enduml
+---
+(program (diagram (diagram_start) (relation (identifier) (arrow) (identifier) (relation_label)) (diagram_end)))
+
+==================
+Sequence message
+==================
+@startuml
+Alice -> Bob : Hello
+@enduml
+---
+(program (diagram (diagram_start) (relation (identifier) (arrow) (identifier) (relation_label)) (diagram_end)))
+
+==================
+Quoted operands
+==================
+@startuml
+Foo --> "Bar Baz"
+@enduml
+---
+(program (diagram (diagram_start) (relation (identifier) (arrow) (string)) (diagram_end)))
+
+==================
+State transition
+==================
+@startuml
+State1 --> State2 : event
+@enduml
+---
+(program (diagram (diagram_start) (relation (identifier) (arrow) (identifier) (relation_label)) (diagram_end)))

@@ -38,6 +38,34 @@ Then in Neovim:
 :TSInstallFromGrammar plantuml
 ```
 
+## No-plugin Deploy Script
+
+To build the parser and install it straight into Neovim's runtime — no
+`nvim-treesitter`, no plugin manager, just the built-in tree-sitter:
+
+```bash
+# from the repo root
+./scripts/nvim_deploy.sh
+```
+
+This compiles `src/parser.c` + `src/scanner.c` and installs into your Neovim
+site directory (`$XDG_DATA_HOME/nvim/site`, default `~/.local/share/nvim/site`):
+
+| Path | Purpose |
+|------|---------|
+| `parser/plantuml.so` | compiled parser |
+| `queries/plantuml/*.scm` | highlights / injections / locals / tags |
+| `ftdetect/plantuml.lua` | `.puml .iuml .plantuml .wsd .pu` → `filetype=plantuml` |
+| `after/ftplugin/plantuml.lua` | starts treesitter highlighting per buffer |
+
+Open any `.puml` file and highlighting starts automatically. Options:
+
+```bash
+./scripts/nvim_deploy.sh --prefix /path/to/dir   # install elsewhere
+./scripts/nvim_deploy.sh --uninstall             # remove it
+CC=clang ./scripts/nvim_deploy.sh                # pick the compiler
+```
+
 ## Supported Extensions
 
 - `.puml`

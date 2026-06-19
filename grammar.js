@@ -1,399 +1,463 @@
 module.exports = grammar({
-	name : "plantuml",
+  name: "plantuml",
 
-	externals : ($) => [$._block_comment_start,
-						$._block_comment_content,
-						$._block_comment_end,
-],
+  externals: ($) => [
+    $._block_comment_start,
+    $._block_comment_content,
+    $._block_comment_end,
+  ],
 
-	extras : ($) => [/\s/],
+  extras: ($) => [/\s/],
 
-	word : ($) => $.identifier,
+  word: ($) => $.identifier,
 
-	rules : {
-		program : ($) => repeat(choice($.diagram, $._definition)),
+  rules: {
+    program: ($) => repeat(choice($.diagram, $._definition)),
 
-		// ==================== DIAGRAM BLOCK ====================
-		diagram : ($) => seq($.diagram_start, repeat($._diagram_content),
-							 $.diagram_end),
+    // ==================== DIAGRAM BLOCK ====================
+    diagram: ($) =>
+      seq($.diagram_start, repeat($._diagram_content), $.diagram_end),
 
-		diagram_start : ($) => /@start[a-zA-Z]+[^\r\n]*/,
-		diagram_end : ($) => /@end[a-zA-Z]+[^\r\n]*/,
+    diagram_start: ($) => /@start[a-zA-Z]+[^\r\n]*/,
+    diagram_end: ($) => /@end[a-zA-Z]+[^\r\n]*/,
 
-		_diagram_content : ($) => choice(
-							 $.class_definition,
-							 $.object_definition,
-							 $.style_inline,
-							 $.style_block,
-							 $.activity,
-							 $.sequence,
-							 $.state,
-							 $.comment,
-							 $.quoted_definition,
-							 $.string,
-							 $.keyword,
-							 $._general_definition,
-							 ),
+    _diagram_content: ($) =>
+      choice(
+        $.class_definition,
+        $.object_definition,
+        $.style,
+        $.activity,
+        $.sequence,
+        $.relation,
+        $.state,
+        $.comment,
+        $.quoted_definition,
+        $.string,
+        $.keyword,
+        $._general_definition,
+      ),
 
-		// ==================== OUTSIDE BLOCK ELEMENTS ====================
-		_definition : ($) => choice(
-						$.class_definition,
-						$.object_definition,
-						$.style_inline,
-						$.style_block,
-						$.activity,
-						$.sequence,
-						$.state,
-						$.comment,
-						$.quoted_definition,
-						$.string,
-						$.keyword,
-						$._general_definition,
-						),
+    // ==================== OUTSIDE BLOCK ELEMENTS ====================
+    _definition: ($) =>
+      choice(
+        $.class_definition,
+        $.object_definition,
+        $.style,
+        $.activity,
+        $.sequence,
+        $.relation,
+        $.state,
+        $.comment,
+        $.quoted_definition,
+        $.string,
+        $.keyword,
+        $._general_definition,
+      ),
 
-		// ==================== QUOTED ====================
-		quoted_definition : ($) => seq(":", optional(/[^:;|<>\r\n]*/), ":"),
+    // ==================== QUOTED ====================
+    quoted_definition: ($) => seq(":", optional(/[^:;|<>\r\n]*/), ":"),
 
-		string : ($) => seq('"', optional(/[^"]*/), '"'),
+    string: ($) => seq('"', optional(/[^"]*/), '"'),
 
-		// ==================== COMMENT ====================
-		comment : ($) => choice($.comment_line, $.comment_block),
+    // ==================== COMMENT ====================
+    comment: ($) => choice($.comment_line, $.comment_block),
 
-		comment_line : ($) => seq("'", optional(/[^\r\n]*/)),
+    comment_line: ($) => seq("'", optional(/[^\r\n]*/)),
 
-		comment_block : ($) => seq(
-						  $._block_comment_start,
-						  optional($._block_comment_content),
-						  $._block_comment_end,
-						  ),
+    comment_block: ($) =>
+      seq(
+        $._block_comment_start,
+        optional($._block_comment_content),
+        $._block_comment_end,
+      ),
 
-		// ==================== STYLE ====================
-		style_inline : ($) => /skinparam\s+\w+(<<[^>]+>>)?\s+[^\{\}\r\n]+/i,
+    // ==================== STYLE ====================
+    style: ($) => choice($.style_inline, $.style_block),
 
-		style_block : ($) => seq(/skinparam\s+\w+(<<[^>]+>>)?/i, "{",
-								 repeat(/.*/), "}"),
+    style_inline: ($) =>
+      seq($.skinparam_keyword, $.skinparam_name, $.skinparam_value),
 
-		// ==================== CLASS ====================
-		class_definition : ($) => seq(
-							 choice(/enum/i, /abstract\s+class/i, /abstract/i,
-									/class/i),
-							 $.class_name,
-							 optional($.class_stereotype),
-							 optional($.class_alias),
-							 optional($.class_color),
-							 $.class_body,
-							 ),
+    style_block: ($) =>
+      seq(
+        $.skinparam_keyword,
+        $.skinparam_name,
+        "{",
+        repeat(/[^{}\r\n]+/),
+        "}",
+      ),
 
-		class_name : ($) => choice(/\w[\w\d_.]*/, seq('"', /[^"]+/, '"')),
+    skinparam_keyword: ($) => /skinparam/i,
 
-		class_stereotype : ($) => seq("<<", /[^>]+/, ">>"),
+    skinparam_name: ($) => /\w+(<<[^>]+>>)?/,
 
-		class_alias : ($) => seq(/as/i,
-								 choice(/\w[\w\d_.]*/, seq('"', /[^"]+/, '"'))),
+    skinparam_value: ($) => /[^\{\}\r\n]+/,
 
-		class_color : ($) => seq("#", /[\w|\\/-]+/),
+    // ==================== CLASS ====================
+    class_definition: ($) =>
+      seq(
+        $.class_keyword,
+        $.class_name,
+        optional($.class_stereotype),
+        optional($.class_alias),
+        optional($.class_color),
+        $.class_body,
+      ),
 
-		class_body : ($) => seq("{", repeat($.class_body_item), "}"),
+    class_keyword: ($) =>
+      choice(/enum/i, /abstract\s+class/i, /abstract/i, /class/i),
 
-		class_body_item : ($) => choice(
-							$.class_separator,
-							$.class_function,
-							$.class_field,
-							$.class_field_other,
-							),
+    class_name: ($) => choice(/\w[\w\d_.]*/, seq('"', /[^"]+/, '"')),
 
-		class_separator : ($) => /[.=_-]{2,}/,
+    class_stereotype: ($) => seq("<<", /[^>]+/, ">>"),
 
-		class_function : ($) => seq(
-						   optional($.class_modifier),
-						   optional($.class_visibility),
-						   choice(
-							   seq(
-								   optional(
-									   seq(/\w[\w\d_]*(\[\])?/, /\w[\w\d_]*/)),
-								   /\w[\w\d_]+/,
-								   "()",
-								   ),
-							   seq(/\w[\w\d_]+/, "()", ":", /\w[\w\d_]*/),
-							   ),
-						   ),
+    class_alias: ($) =>
+      seq(/as/i, choice(/\w[\w\d_.]*/, seq('"', /[^"]+/, '"'))),
 
-		class_field : ($) => seq(
-						optional($.class_modifier),
-						optional($.class_visibility),
-						choice(
-							seq(optional(
-									seq(/\w[\w\d_]*(\[\])?/, /\w[\w\d_]*/)),
-								/\w[\w\d_]+/),
-							seq(/\w[\w\d_]+/, ":", /\w[\w\d_]*/),
-							),
-						),
+    class_color: ($) => seq("#", /[\w|\\/-]+/),
 
-		class_field_other : ($) => seq(
-							  optional($.class_modifier),
-							  optional($.class_visibility),
-							  /[^{}\r\n]+/,
-							  ),
+    class_body: ($) => seq("{", repeat($.class_body_item), "}"),
 
-		class_modifier : ($) => seq("{", choice(/static/i, /abstract/i), "}"),
+    class_body_item: ($) =>
+      choice(
+        $.class_separator,
+        $.class_function,
+        $.class_field,
+        $.class_field_other,
+      ),
 
-		class_visibility : ($) => /[~#+-]/,
+    class_separator: ($) => /[.=_-]{2,}/,
 
-		// ==================== OBJECT ====================
-		object_definition : ($) => seq($.object_keyword, $.object_name,
-									   optional(/[^\r\n]*/)),
+    class_function: ($) =>
+      seq(
+        optional($.class_modifier),
+        optional($.class_visibility),
+        choice(
+          seq(
+            optional(seq(/\w[\w\d_]*(\[\])?/, /\w[\w\d_]*/)),
+            /\w[\w\d_]+/,
+            "()",
+          ),
+          seq(/\w[\w\d_]+/, "()", ":", /\w[\w\d_]*/),
+        ),
+      ),
 
-		object_keyword : ($) => choice(
-						   /object/i,
-						   /participant/i,
-						   /boundary/i,
-						   /control/i,
-						   /entity/i,
-						   /database/i,
-						   /component/i,
-						   /interface/i,
-						   /package/i,
-						   /node/i,
-						   /folder/i,
-						   /frame/i,
-						   /cloud/i,
-						   /annotation/i,
-						   /rectangle/i,
-						   /namespace/i,
-						   /partition/i,
-						   /agent/i,
-						   /artifact/i,
-						   /card/i,
-						   /circle/i,
-						   /collections/i,
-						   /file/i,
-						   /hexagon/i,
-						   /label/i,
-						   /person/i,
-						   /queue/i,
-						   /stack/i,
-						   /storage/i,
-						   /mainframe/i,
-						   /map/i,
-						   /binary/i,
-						   /clock/i,
-						   /concise/i,
-						   /robust/i,
-						   /json/i,
-						   /protocol/i,
-						   /struct/i,
-						   /exception/i,
-						   /metaclass/i,
-						   /stereotype/i,
-						   ),
+    class_field: ($) =>
+      seq(
+        optional($.class_modifier),
+        optional($.class_visibility),
+        choice(
+          seq(optional(seq(/\w[\w\d_]*(\[\])?/, /\w[\w\d_]*/)), /\w[\w\d_]+/),
+          seq(/\w[\w\d_]+/, ":", /\w[\w\d_]*/),
+        ),
+      ),
 
-		object_name : ($) => choice(/\w[\w\d_]*/, seq('"', /[^"]+/, '"')),
+    class_field_other: ($) =>
+      seq(
+        optional($.class_modifier),
+        optional($.class_visibility),
+        /[^{}\r\n]+/,
+      ),
 
-		// ==================== ACTIVITY ====================
-		activity : ($) => choice(
-					 $.activity_if,
-					 $.activity_else,
-					 $.activity_while,
-					 $.activity_endwhile,
-					 ),
+    class_modifier: ($) => seq("{", choice(/static/i, /abstract/i), "}"),
 
-		activity_if : ($) => seq(
-						choice(/if/i, /else\s+if/i),
-						optional(seq("(", /[^)]+/, ")")),
-						optional(/then/i),
-						optional(seq("(", /[^)]+/, ")")),
-						),
+    class_visibility: ($) => /[~#+-]/,
 
-		activity_else : ($) => seq(/else/i, optional(seq("(", /[^)]+/, ")"))),
+    // ==================== OBJECT ====================
+    object_definition: ($) =>
+      seq($.object_keyword, $.object_name, optional(/[^\r\n]*/)),
 
-		activity_while : ($) => seq(
-						   optional(/repeat\s+/i),
-						   /while/i,
-						   "(",
-						   /[^)]+/,
-						   ")",
-						   optional(seq(/is/i, "(", /[^)]+/, ")")),
-						   ),
+    object_keyword: ($) =>
+      choice(
+        /object/i,
+        /participant/i,
+        /boundary/i,
+        /control/i,
+        /entity/i,
+        /database/i,
+        /component/i,
+        /interface/i,
+        /package/i,
+        /node/i,
+        /folder/i,
+        /frame/i,
+        /cloud/i,
+        /annotation/i,
+        /rectangle/i,
+        /namespace/i,
+        /partition/i,
+        /agent/i,
+        /artifact/i,
+        /card/i,
+        /circle/i,
+        /collections/i,
+        /file/i,
+        /hexagon/i,
+        /label/i,
+        /person/i,
+        /queue/i,
+        /stack/i,
+        /storage/i,
+        /mainframe/i,
+        /map/i,
+        /binary/i,
+        /clock/i,
+        /concise/i,
+        /robust/i,
+        /json/i,
+        /protocol/i,
+        /struct/i,
+        /exception/i,
+        /metaclass/i,
+        /stereotype/i,
+      ),
 
-		activity_endwhile : ($) => seq(/end/i, /while/i,
-									   optional(seq("(", /[^)]+/, ")"))),
+    object_name: ($) => choice(/\w[\w\d_]*/, seq('"', /[^"]+/, '"')),
 
-		// ==================== SEQUENCE ====================
-		sequence : ($) => choice(
-					 $.sequence_divider,
-					 $.sequence_ref_inline,
-					 $.sequence_ref_block,
-					 $.sequence_delay,
-					 $.sequence_space,
-					 ),
+    // ==================== ACTIVITY ====================
+    activity: ($) =>
+      choice(
+        $.activity_if,
+        $.activity_else,
+        $.activity_while,
+        $.activity_endwhile,
+      ),
 
-		sequence_divider : ($) => seq(/=+/, optional(/[^=]+/), /=+/),
+    activity_if: ($) =>
+      seq(
+        choice(/if/i, /else\s+if/i),
+        optional(seq("(", /[^)]+/, ")")),
+        optional(/then/i),
+        optional(seq("(", /[^)]+/, ")")),
+      ),
 
-		sequence_ref_inline : ($) => seq(/ref\s+over/i, /\w[\w\d_]*/, ":",
-										 /[^\r\n]+/),
+    activity_else: ($) => seq(/else/i, optional(seq("(", /[^)]+/, ")"))),
 
-		sequence_ref_block : ($) => seq(/ref\s+over/i, /\w[\w\d_]*/, /[^\r\n]*/,
-										/end\s+ref/i),
+    activity_while: ($) =>
+      seq(
+        optional(/repeat\s+/i),
+        /while/i,
+        "(",
+        /[^)]+/,
+        ")",
+        optional(seq(/is/i, "(", /[^)]+/, ")")),
+      ),
 
-		sequence_delay : ($) => seq(/\.{3,}/, optional(/[^\r\n]+/), /\.{3,}/),
+    activity_endwhile: ($) =>
+      seq(/end/i, /while/i, optional(seq("(", /[^)]+/, ")"))),
 
-		sequence_space : ($) => seq(/\|{2,}/, optional(/\d+/), /\|{1,}/),
+    // ==================== SEQUENCE ====================
+    sequence: ($) =>
+      choice(
+        $.sequence_divider,
+        $.sequence_ref_inline,
+        $.sequence_ref_block,
+        $.sequence_delay,
+        $.sequence_space,
+      ),
 
-		// ==================== STATE ====================
-		state : ($) => $.state_concurrent,
+    sequence_divider: ($) => token(prec(1, /={2,}([^=\r\n]*={2,})?/)),
 
-		state_concurrent : ($) => /-+/,
+    sequence_ref_inline: ($) =>
+      seq(/ref\s+over/i, /\w[\w\d_]*/, ":", /[^\r\n]+/),
 
-		// ==================== KEYWORD ====================
-		keyword : ($) => choice(
-					// Activity keywords (not overlapping with activity rules)
-					/end\s+fork/i,
-					/end\s+split/i,
-					/fork/i,
-					/fork\s+again/i,
-					/detach/i,
-					/split/i,
-					/split\s+again/i,
-					/endif/i,
-					/repeat/i,
-					/endswitch/i,
-					/switch/i,
-					/case/i,
-					/usecase/i,
-					/actor/i,
-					/autonumber/i,
-					/autonumber\s+stop/i,
-					/autonumber\s+resume/i,
-					/autonumber\s+inc/i,
-					/activate/i,
-					/deactivate/i,
-					/return/i,
-					/destroy/i,
-					/newpage/i,
-					/alt/i,
-					/opt/i,
-					/loop/i,
-					/par/i,
-					/break/i,
-					/critical/i,
-					/group/i,
-					/box/i,
-					/end\s+box/i,
-					/top\s+to\s+bottom\s+direction/i,
-					/left\s+to\s+right\s+direction/i,
-					/kill/i,
-					/end\s+merge/i,
-					/allow_mixing/i,
-					/allow\s+mixing/i,
-					/goto/i,
-					/backward/i,
-					/diamond/i,
-					/compact\s+concise/i,
-					/compact\s+robust/i,
-					/state/i,
-					// Object keywords (for standalone usage)
-					/create/i,
-					// General
-					/as/i,
-					seq("{", choice(/static/i, /abstract/i), "}"),
-					),
+    sequence_ref_block: ($) =>
+      seq(/ref\s+over/i, /\w[\w\d_]*/, /[^\r\n]*/, /end\s+ref/i),
 
-		// ==================== GENERAL ====================
-		_general_definition : ($) => choice(
-								$.title_multiline,
-								$.title_inline,
-								$.scale,
-								$.caption,
-								$.note_inline,
-								$.note_multiline,
-								$.note_of_inline,
-								$.note_of_multiline,
-								$.note_as,
-								$.header_multiline,
-								$.header_inline,
-								$.preprocessing,
-								$.link,
-								$.color,
-								$.identifier,
-								$.hide_show_remove,
-								),
+    sequence_delay: ($) => seq(/\.{3,}/, optional(/[^\r\n]+/), /\.{3,}/),
 
-		// Title
-		title_multiline : ($) => /title[^\r\n]*end\s+title/i,
+    sequence_space: ($) => seq(/\|{2,}/, optional(/\d+/), /\|{1,}/),
 
-		title_inline : ($) => /title[^\r\n]+/i,
+    // ==================== RELATION ====================
+    // Links between two elements: class associations / inheritance,
+    // sequence messages, state transitions, component wiring, etc.
+    // e.g.  Foo --> Bar : label   |   A ..|> B   |   a -[#red]-> b : msg
+    relation: ($) =>
+      prec.right(
+        seq(
+          $._relation_end,
+          $.arrow,
+          $._relation_end,
+          optional($.relation_label),
+        ),
+      ),
 
-		// Scale
-		scale : ($) => /scale[^\r\n]+/i,
+    _relation_end: ($) => choice($.identifier, $.string),
 
-		// Caption
-		caption : ($) => /caption[^\r\n]+/i,
+    // Optional inline cardinality stays inside the string operand; the arrow
+    // body may embed a [#color] / [style] hint and direction words (up/down/
+    // left/right). Higher precedence so it wins the longest-match against the
+    // bare `link` / `state_concurrent` tokens once an operand precedes it.
+    arrow: ($) =>
+      token(
+        prec(
+          2,
+          /[<>ox*#}{|^+]*[-.=~]+(?:\[[^\]\r\n]*\])?[a-z]*[-.=~]*(?:\[[^\]\r\n]*\])?[-.=~]*[<>ox*#}{|^+]*/,
+        ),
+      ),
 
-		// Note
-		note_inline : ($) => /note\s+(left|right):[^\r\n]+/i,
+    relation_label: ($) => seq(":", optional(/[^\r\n]*/)),
 
-		note_multiline : ($) => /note\s+(left|right)[^\r\n]*end\s*note/i,
+    // ==================== STATE ====================
+    state: ($) => $.state_concurrent,
 
-		note_of_inline : ($) =>
-						   /[rh]?note\s+(right|left|top|bottom)?\s+(of|over|on\s+link)\s+(\w[\w\s]+|"[^"]+")(#\w+)?:[^\r\n]+/i,
+    state_concurrent: ($) => /-+/,
 
-		note_of_multiline : ($) =>
-							  /[rh]?note\s+(right|left|top|bottom)?\s+(of|over|on\s+link)\s+(\w[\w\s]+|"[^"]+")(#\w+)?[^\r\n]*end\s*[rh]?note/i,
+    // ==================== KEYWORD ====================
+    keyword: ($) =>
+      choice(
+        // Activity keywords (not overlapping with activity rules)
+        /start/i,
+        /stop/i,
+        /end\s+fork/i,
+        /end\s+split/i,
+        /fork/i,
+        /fork\s+again/i,
+        /detach/i,
+        /split/i,
+        /split\s+again/i,
+        /endif/i,
+        /repeat/i,
+        /endswitch/i,
+        /switch/i,
+        /case/i,
+        /usecase/i,
+        /actor/i,
+        /autonumber/i,
+        /autonumber\s+stop/i,
+        /autonumber\s+resume/i,
+        /autonumber\s+inc/i,
+        /activate/i,
+        /deactivate/i,
+        /return/i,
+        /destroy/i,
+        /newpage/i,
+        /alt/i,
+        /opt/i,
+        /loop/i,
+        /par/i,
+        /break/i,
+        /critical/i,
+        /group/i,
+        /box/i,
+        /end\s+box/i,
+        /top\s+to\s+bottom\s+direction/i,
+        /left\s+to\s+right\s+direction/i,
+        /kill/i,
+        /end\s+merge/i,
+        /allow_mixing/i,
+        /allow\s+mixing/i,
+        /goto/i,
+        /backward/i,
+        /diamond/i,
+        /compact\s+concise/i,
+        /compact\s+robust/i,
+        /state/i,
+        // Object keywords (for standalone usage)
+        /create/i,
+        // General
+        /as/i,
+        seq("{", choice(/static/i, /abstract/i), "}"),
+      ),
 
-		note_as : ($) => /note\s+"[^"]+"\s+as\s+\w[\w\d]+/i,
+    // ==================== GENERAL ====================
+    _general_definition: ($) =>
+      choice(
+        $.title_multiline,
+        $.title_inline,
+        $.scale,
+        $.caption,
+        $.note_inline,
+        $.note_multiline,
+        $.note_of_inline,
+        $.note_of_multiline,
+        $.note_as,
+        $.header_multiline,
+        $.header_inline,
+        $.preprocessing,
+        $.link,
+        $.color,
+        $.identifier,
+        $.hide_show_remove,
+      ),
 
-		// Header, Legend, Footer
-		header_multiline : ($) =>
-							 /(center|left|right)?\s*(header|legend|footer)[^\r\n]*end\s?(header|legend|footer)/i,
+    // Title
+    title_multiline: ($) => /title[^\r\n]*end\s+title/i,
 
-		header_inline : ($) =>
-						  /(center|left|right)?\s*(header|legend|footer)[^\r\n]+/i,
+    title_inline: ($) => /title[^\r\n]+/i,
 
-		// Preprocessing
-		preprocessing : ($) => choice(
-						  /!includesub/i,
-						  /!include/i,
-						  /!enddefinelong/i,
-						  /!definelong/i,
-						  /!define/i,
-						  /!startsub/i,
-						  /!endsub/i,
-						  /!ifdef/i,
-						  /!else/i,
-						  /!endif/i,
-						  /!ifndef/i,
-						  /!if/i,
-						  /!elseif/i,
-						  /!while/i,
-						  /!endwhile/i,
-						  /!procedure/i,
-						  /!function/i,
-						  /!end\s+function/i,
-						  /!end\s+procedure/i,
-						  /!return/i,
-						  /!import/i,
-						  /!includedef/i,
-						  /!includeurl/i,
-						  /!include_many/i,
-						  /!include_once/i,
-						  /!log/i,
-						  /!dump_memory/i,
-						  /!theme/i,
-						  /!pragma/i,
-						  /!assume\s+transparent\s+(dark|light)/i,
-						  ),
+    // Scale
+    scale: ($) => /scale[^\r\n]+/i,
 
-		// Link
-		link : ($) => /[-.~=]+/,
+    // Caption
+    caption: ($) => /caption[^\r\n]+/i,
 
-		// Color
-		color : ($) => /#(?:[0-9a-f]{6}|[0-9a-f]{3}|\w+)/i,
+    // Note
+    note_inline: ($) => /note\s+(left|right):[^\r\n]+/i,
 
-		// Identifier
-		identifier : ($) => /[\w_]+/,
+    note_multiline: ($) => /note\s+(left|right)[^\r\n]*end\s*note/i,
 
-		// Hide/Show/Remove
-		hide_show_remove : ($) => seq(choice(/hide/i, /show/i, /remove/i),
-									  /[^\r\n]+/),
-	},
+    note_of_inline: ($) =>
+      /[rh]?note\s+(right|left|top|bottom)?\s+(of|over|on\s+link)\s+(\w[\w\s]+|"[^"]+")(#\w+)?:[^\r\n]+/i,
+
+    note_of_multiline: ($) =>
+      /[rh]?note\s+(right|left|top|bottom)?\s+(of|over|on\s+link)\s+(\w[\w\s]+|"[^"]+")(#\w+)?[^\r\n]*end\s*[rh]?note/i,
+
+    note_as: ($) => /note\s+"[^"]+"\s+as\s+\w[\w\d]+/i,
+
+    // Header, Legend, Footer
+    header_multiline: ($) =>
+      /((center|left|right)\s+)?(header|legend|footer)[^\r\n]*end\s?(header|legend|footer)/i,
+
+    header_inline: ($) =>
+      /((center|left|right)\s+)?(header|legend|footer)[^\r\n]+/i,
+
+    // Preprocessing
+    preprocessing: ($) => seq($._preprocessing_directive, optional(/[^\r\n]+/)),
+
+    _preprocessing_directive: ($) =>
+      choice(
+        /!includesub/i,
+        /!include/i,
+        /!enddefinelong/i,
+        /!definelong/i,
+        /!define/i,
+        /!startsub/i,
+        /!endsub/i,
+        /!ifdef/i,
+        /!else/i,
+        /!endif/i,
+        /!ifndef/i,
+        /!if/i,
+        /!elseif/i,
+        /!while/i,
+        /!endwhile/i,
+        /!procedure/i,
+        /!function/i,
+        /!end\s+function/i,
+        /!end\s+procedure/i,
+        /!return/i,
+        /!import/i,
+        /!includedef/i,
+        /!includeurl/i,
+        /!include_many/i,
+        /!include_once/i,
+        /!log/i,
+        /!dump_memory/i,
+        /!theme/i,
+        /!pragma/i,
+        /!assume\s+transparent\s+(dark|light)/i,
+      ),
+
+    // Link
+    link: ($) => /[-.~=]+/,
+
+    // Color
+    color: ($) => /#(?:[0-9a-f]{6}|[0-9a-f]{3}|\w+)/i,
+
+    // Identifier
+    identifier: ($) => /[\w_]+/,
+
+    // Hide/Show/Remove
+    hide_show_remove: ($) => token(prec(1, /(?:hide|show|remove)\s+[^\r\n]+/i)),
+  },
 });
