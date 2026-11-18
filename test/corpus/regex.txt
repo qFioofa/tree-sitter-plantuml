@@ -1,0 +1,14 @@
+==================
+Regex diagram
+==================
+@startregex
+^[a-z]+(\d{2,4})?$
+@endregex
+---
+
+(source_file
+  (regex_diagram
+    (diagram_start)
+    (raw_line)
+    (diagram_end)))
+

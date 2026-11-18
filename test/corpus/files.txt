@@ -1,0 +1,24 @@
+==================
+Files diagram
+==================
+@startfiles
+src/
+  main.rs
+  lib.rs
+README.md
+@endfiles
+---
+
+(source_file
+  (files_diagram
+    (diagram_start)
+    (files_dir
+      path: (path))
+    (files_dir
+      path: (path))
+    (files_dir
+      path: (path))
+    (files_dir
+      path: (path))
+    (diagram_end)))
+

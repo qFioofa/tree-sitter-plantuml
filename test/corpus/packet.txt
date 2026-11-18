@@ -1,0 +1,24 @@
+==================
+Packet diagram
+==================
+@startpacketdiag
+0-15: Source Port
+16-31: Destination Port
+32-63: Sequence Number
+@endpacketdiag
+---
+
+(source_file
+  (packet_diagram
+    (diagram_start)
+    (packet_field
+      range: (packet_range)
+      label: (label))
+    (packet_field
+      range: (packet_range)
+      label: (label))
+    (packet_field
+      range: (packet_range)
+      label: (label))
+    (diagram_end)))
+

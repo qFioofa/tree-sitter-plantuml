@@ -1,0 +1,22 @@
+==================
+YAML diagram
+==================
+@startyaml
+#highlight "name"
+name: Alice
+age: 30
+items:
+  - one
+  - two
+@endyaml
+---
+
+(source_file
+  (yaml_diagram
+    (diagram_start)
+    (yaml_highlight
+      path: (string))
+    (yaml_content)
+    (yaml_content)
+    (diagram_end)))
+

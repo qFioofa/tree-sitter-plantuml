@@ -1,0 +1,24 @@
+==================
+Creole diagram
+==================
+@startcreole
+= Heading =
+Some **bold** and //italic// text.
+* item one
+* item two
+| a | b |
+====
+@endcreole
+---
+
+(source_file
+  (creole_diagram
+    (diagram_start)
+    (creole_heading)
+    (creole_text)
+    (creole_list_item)
+    (creole_list_item)
+    (creole_table_row)
+    (creole_heading)
+    (diagram_end)))
+

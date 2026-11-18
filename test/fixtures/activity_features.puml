@@ -1,0 +1,76 @@
+@startuml
+start
+:Simple action;
+#red:Colored action;
+:Action with <b>creole</b>;
+:Action with newline
+continued;
+:Action without semicolon
+next line;
+:action with terminator|
+:sdl input<
+:sdl output>
+:sdl save/
+stop
+kill
+detach
+break
+end
+label foo
+goto bar
+backward
+backward:go back;
+-> arrow label;
+->
+->[#red] colored arrow;
+if (condition) then (yes)
+  :yes;
+elseif (other) then (maybe)
+  :maybe;
+else (no)
+  :no;
+endif
+while (loop condition) is (yes)
+  :body;
+endwhile (done)
+repeat
+  :body;
+repeat while (again) is (yes)
+switch (choice)
+case (one)
+  :one;
+case (two)
+  :two;
+endswitch
+fork
+  :a;
+fork again
+  :b;
+end fork {or}
+split
+  :a;
+split again
+  :b;
+end split {label}
+partition "Part" #lightblue {
+  :inside;
+}
+group MyGroup {
+  :grouped;
+}
+|Swimlane|
+:A in lane;
+|#red|Red lane|
+:B in red lane;
+(A) -> (B)
+(A) --> (B) : label
+(A)
+#blue:(B)
+:action with note;
+note right: a note
+floating note left : floating text
+:action with stereotype; <<procedure>>
+legend
+activity legend
+endlegend
+@enduml

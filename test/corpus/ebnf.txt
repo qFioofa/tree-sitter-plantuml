@@ -1,0 +1,97 @@
+==================
+EBNF diagram
+==================
+@startebnf
+expr = term, { ("+" | "-"), term };
+term = factor, { ("*" | "/"), factor };
+factor = number | "(" , expr, ")";
+number = digit, { digit };
+@endebnf
+---
+
+(source_file
+  (ebnf_diagram
+    (diagram_start)
+    (ebnf_rule
+      name: (identifier)
+      expression: (ebnf_expression
+        (ebnf_concatenation
+          (ebnf_term
+            (ebnf_identifier
+              (identifier)))
+          (ebnf_term
+            (ebnf_repeat
+              (ebnf_expression
+                (ebnf_concatenation
+                  (ebnf_term
+                    (ebnf_group
+                      (ebnf_expression
+                        (ebnf_concatenation
+                          (ebnf_term
+                            (ebnf_terminal
+                              (string))))
+                        (ebnf_concatenation
+                          (ebnf_term
+                            (ebnf_terminal
+                              (string)))))))
+                  (ebnf_term
+                    (ebnf_identifier
+                      (identifier))))))))))
+    (ebnf_rule
+      name: (identifier)
+      expression: (ebnf_expression
+        (ebnf_concatenation
+          (ebnf_term
+            (ebnf_identifier
+              (identifier)))
+          (ebnf_term
+            (ebnf_repeat
+              (ebnf_expression
+                (ebnf_concatenation
+                  (ebnf_term
+                    (ebnf_group
+                      (ebnf_expression
+                        (ebnf_concatenation
+                          (ebnf_term
+                            (ebnf_terminal
+                              (string))))
+                        (ebnf_concatenation
+                          (ebnf_term
+                            (ebnf_terminal
+                              (string)))))))
+                  (ebnf_term
+                    (ebnf_identifier
+                      (identifier))))))))))
+    (ebnf_rule
+      name: (identifier)
+      expression: (ebnf_expression
+        (ebnf_concatenation
+          (ebnf_term
+            (ebnf_identifier
+              (identifier))))
+        (ebnf_concatenation
+          (ebnf_term
+            (ebnf_terminal
+              (string)))
+          (ebnf_term
+            (ebnf_identifier
+              (identifier)))
+          (ebnf_term
+            (ebnf_terminal
+              (string))))))
+    (ebnf_rule
+      name: (identifier)
+      expression: (ebnf_expression
+        (ebnf_concatenation
+          (ebnf_term
+            (ebnf_identifier
+              (identifier)))
+          (ebnf_term
+            (ebnf_repeat
+              (ebnf_expression
+                (ebnf_concatenation
+                  (ebnf_term
+                    (ebnf_identifier
+                      (identifier))))))))))
+    (diagram_end)))
+

@@ -1,0 +1,38 @@
+==================
+Preprocessor blocks
+==================
+@startuml
+!include common.iuml
+!define GREET(name) Hello name
+!$x = 10
+!$x++
+!ifdef DEBUG
+class Debug
+!else
+class Release
+!endif
+!procedure foo(a)
+class A
+!endprocedure
+@enduml
+---
+
+(source_file
+  (uml_diagram
+    (diagram_start)
+    (preprocessor_include
+      path: (label))
+    (preprocessor_define
+      parameters: (label)
+      value: (label))
+    (preprocessor_variable
+      value: (label))
+    (preprocessor_variable
+      value: (label))
+    (preprocessor_if_block
+      condition: (label)
+      (preprocessor_else))
+    (preprocessor_procedure
+      parameters: (label))
+    (diagram_end)))
+

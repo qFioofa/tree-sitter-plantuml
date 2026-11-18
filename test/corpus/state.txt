@@ -1,0 +1,41 @@
+==================
+State behaviors and transitions
+==================
+@startuml
+state Active {
+  entry / start
+  exit / stop
+  do / work
+  Idle --> Busy
+}
+[*] --> Active
+Active --> [*]
+@enduml
+---
+
+(source_file
+  (uml_diagram
+    (diagram_start)
+    (state_declaration
+      name: (identifier)
+      body: (state_body
+        (state_behavior
+          action: (label))
+        (state_behavior
+          action: (label))
+        (state_behavior
+          action: (label))
+        (relation
+          left: (identifier)
+          operator: (relation_operator)
+          right: (identifier))))
+    (relation
+      left: (pseudostate)
+      operator: (relation_operator)
+      right: (identifier))
+    (relation
+      left: (identifier)
+      operator: (relation_operator)
+      right: (pseudostate))
+    (diagram_end)))
+

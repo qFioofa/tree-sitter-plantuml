@@ -1,0 +1,26 @@
+==================
+Object JSON body
+==================
+@startuml
+object Config {
+  "name": "app",
+  "port": 8080
+}
+@enduml
+---
+
+(source_file
+  (uml_diagram
+    (diagram_start)
+    (entity_declaration
+      kind: (entity_kind)
+      name: (identifier)
+      body: (entity_body
+        (map_member
+          key: (string)
+          value: (label))
+        (map_member
+          key: (string)
+          value: (label))))
+    (diagram_end)))
+

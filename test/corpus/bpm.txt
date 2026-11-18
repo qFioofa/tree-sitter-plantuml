@@ -1,0 +1,33 @@
+==================
+BPM diagram
+==================
+@startbpm
+:Task one;
+if (ok)
+  :Task two;
+else
+  :Task three;
+endif
+goto Task one;
+merge
+@endbpm
+---
+
+(source_file
+  (bpm_diagram
+    (diagram_start)
+    (bpm_task
+      (action_text))
+    (bpm_command
+      value: (label))
+    (bpm_task
+      (action_text))
+    (bpm_command)
+    (bpm_task
+      (action_text))
+    (bpm_command)
+    (bpm_command
+      value: (label))
+    (bpm_command)
+    (diagram_end)))
+

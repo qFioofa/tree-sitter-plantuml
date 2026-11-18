@@ -1,0 +1,54 @@
+@startuml
+abstract class AbstractBase
+abstract Foo
+class Foo<T> <<stereotype>> as F #LightBlue $tag [[https://example.com]] {
+  +field : int
+  -field2: String = "x"
+  #protectedField : int
+  ~packageField
+  {static} +staticField : int
+  +{abstract} method(int a, String b) : void
+  +<T> generic(T value): T
+  +void cppStyle()
+  +std::string qualified(int x)
+  String data
+  {field} fieldModifier
+  -- separator
+  .. dotted separator
+  == double separator
+  __ underscore separator
+}
+interface IBar extends Foo implements Baz
+enum Color {
+  RED
+  GREEN : green desc
+}
+enum Inline { RED GREEN }
+annotation Ann
+protocol Proto
+struct St
+exception Ex
+metaclass Meta
+record Pair
+dataclass Config
+class Cls extends AbstractBase implements IBar
+class Cls2 as Alias2
+class "Long Name" as Long
+class Cls3 <<(S,#FF7700)>> #red $tag [[link]] order 10
+class Allman
+{
+  +field
+}
+state StateOne
+package "pkg" as P #EEE {
+  class Inner
+}
+namespace ns {
+  class NsClass
+}
+namespace bodyless
+together {
+  class T1
+  class T2
+}
+@enduml

@@ -3,21 +3,30 @@ Single-line comment
 ==================
 ' This is a comment
 ---
-(program (comment (comment_line)))
+
+(source_file
+  (comment
+    (comment_line)))
 
 ==================
 Single-line comment with no content
 ==================
 '
 ---
-(program (comment (comment_line)))
+
+(source_file
+  (comment
+    (comment_line)))
 
 ==================
 Single-line comment at the end of line
 ==================
 ' Connection comment
 ---
-(program (comment (comment_line)))
+
+(source_file
+  (comment
+    (comment_line)))
 
 ==================
 Block comment
@@ -26,14 +35,18 @@ Block comment
 multi-line
 comment '/
 ---
-(program (comment (comment_block)))
+
+(source_file
+  (block_comment))
 
 ==================
 Block comment with no content
 ==================
 /' '/
 ---
-(program (comment (comment_block)))
+
+(source_file
+  (block_comment))
 
 ==================
 Block comment with special characters
@@ -41,7 +54,9 @@ Block comment with special characters
 /' Comment with !@#$%^&*()_+ special characters
 and numbers 1234567890 '/
 ---
-(program (comment (comment_block)))
+
+(source_file
+  (block_comment))
 
 ==================
 Block comment with PlantUML syntax inside
@@ -54,7 +69,9 @@ class Example {
 @enduml
 comment '/
 ---
-(program (comment (comment_block)))
+
+(source_file
+  (block_comment))
 
 ==================
 Multiple comments
@@ -65,7 +82,13 @@ with multiple lines
 '/
 ' Third comment
 ---
-(program (comment (comment_line)) (comment (comment_block)) (comment (comment_line)))
+
+(source_file
+  (comment
+    (comment_line))
+  (block_comment)
+  (comment
+    (comment_line)))
 
 ==================
 Nested single quotes in block comment
@@ -74,21 +97,29 @@ Nested single quotes in block comment
 with ' inside it
 '/
 ---
-(program (comment (comment_block)))
+
+(source_file
+  (block_comment))
 
 ==================
 Comment with trailing whitespace
 ==================
 ' This comment has trailing spaces    
 ---
-(program (comment (comment_line)))
+
+(source_file
+  (comment
+    (comment_line)))
 
 ==================
 Empty file with just a comment
 ==================
 '
 ---
-(program (comment (comment_line)))
+
+(source_file
+  (comment
+    (comment_line)))
 
 ==================
 Block comment with empty lines
@@ -99,4 +130,6 @@ Third line with content
 
 Last line '/
 ---
-(program (comment (comment_block)))
+
+(source_file
+  (block_comment))

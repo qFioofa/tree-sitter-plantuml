@@ -1,0 +1,13 @@
+@startwbs
+* Root
+** First
+*** Leaf one
+**** Deep leaf
+** Second
++ Plus branch
+++ Plus child
+- Minus branch
+-- Minus child
+*: multiline task
+second line;
+@endwbs

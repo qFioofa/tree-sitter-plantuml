@@ -1,0 +1,37 @@
+==================
+Information Engineering relation
+==================
+@startuml
+entity Customer {
+  * id : int
+}
+entity Order {
+  * id : int
+}
+Customer ||--o{ Order
+@enduml
+---
+
+(source_file
+  (uml_diagram
+    (diagram_start)
+    (entity_declaration
+      kind: (entity_kind)
+      name: (identifier)
+      body: (entity_body
+        (member
+          (raw_member
+            (raw_text)))))
+    (entity_declaration
+      kind: (entity_kind)
+      name: (identifier)
+      body: (entity_body
+        (member
+          (raw_member
+            (raw_text)))))
+    (relation
+      left: (identifier)
+      operator: (relation_operator)
+      right: (identifier))
+    (diagram_end)))
+

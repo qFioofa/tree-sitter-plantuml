@@ -1,0 +1,22 @@
+@startuml
+!include <C4/C4_Container>
+!theme plain
+!define FOO(x) x
+!$var = "value"
+!if ($var == "value")
+class Enabled
+!else
+class Disabled
+!endif
+!procedure foo($x)
+class Proc
+!endprocedure
+!function bar($x)
+!return $x
+!endfunction
+!startsub mysub
+class Sub
+!endsub
+!pragma layout smetana
+!option handwritten
+@enduml

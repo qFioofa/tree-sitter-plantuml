@@ -1,0 +1,39 @@
+==================
+Stdlib macro calls
+==================
+@startuml
+!include <archimate/Archimate>
+Archimate(Business_Actor, "Customer")
+Archimate(Application_Component, "Web") 
+Rel_Serving("Web", "Customer")
+@enduml
+---
+
+(source_file
+  (uml_diagram
+    (diagram_start)
+    (preprocessor_include
+      path: (label))
+    (macro_call
+      name: (identifier)
+      arguments: (macro_arguments
+        (macro_argument
+          (label))
+        (macro_argument
+          (label))))
+    (macro_call
+      name: (identifier)
+      arguments: (macro_arguments
+        (macro_argument
+          (label))
+        (macro_argument
+          (label))))
+    (macro_call
+      name: (identifier)
+      arguments: (macro_arguments
+        (macro_argument
+          (label))
+        (macro_argument
+          (label))))
+    (diagram_end)))
+

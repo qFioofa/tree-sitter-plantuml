@@ -29,7 +29,7 @@ site directory (`$XDG_DATA_HOME/nvim/site`, default `~/.local/share/nvim/site`):
 | Path | Purpose |
 |------|---------|
 | `parser/plantuml.so` | compiled parser |
-| `queries/plantuml/*.scm` | highlights / injections / locals / tags |
+| `queries/plantuml/*.scm` | highlights / injections / folds / indents / locals / tags / textobjects / context / rainbow |
 | `ftdetect/plantuml.lua` | `.puml .iuml .plantuml .wsd .pu` → `filetype=plantuml` |
 | `after/ftplugin/plantuml.lua` | starts treesitter highlighting + sets `commentstring` per buffer |
 

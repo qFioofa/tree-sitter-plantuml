@@ -1,14 +1,14 @@
-================================================================================
-Diagram Block Tests
-================================================================================
-
 ==================
 Simple diagram block
 ==================
 @startuml
 @enduml
 ---
-(program (diagram (diagram_start) (diagram_end)))
+
+(source_file
+  (uml_diagram
+    (diagram_start)
+    (diagram_end)))
 
 ==================
 Diagram block with name
@@ -16,7 +16,12 @@ Diagram block with name
 @startuml MyDiagram
 @enduml
 ---
-(program (diagram (diagram_start) (diagram_end)))
+
+(source_file
+  (uml_diagram
+    (diagram_start)
+    (diagram_name)
+    (diagram_end)))
 
 ==================
 Diagram block with content on separate lines
@@ -26,7 +31,14 @@ class Foo {
 }
 @enduml
 ---
-(program (diagram (diagram_start) (class_definition (class_keyword) (class_name) (class_body)) (diagram_end)))
+
+(source_file
+  (uml_diagram
+    (diagram_start)
+    (class_declaration
+      (identifier)
+      (entity_body))
+    (diagram_end)))
 
 ==================
 Multiple diagram blocks
@@ -36,7 +48,16 @@ Multiple diagram blocks
 @startuml Second
 @enduml
 ---
-(program (diagram (diagram_start) (diagram_end)) (diagram (diagram_start) (diagram_end)))
+
+(source_file
+  (uml_diagram
+    (diagram_start)
+    (diagram_name)
+    (diagram_end))
+  (uml_diagram
+    (diagram_start)
+    (diagram_name)
+    (diagram_end)))
 
 ==================
 Diagram with comment inside
@@ -45,7 +66,13 @@ Diagram with comment inside
 ' This is a comment
 @enduml
 ---
-(program (diagram (diagram_start) (comment (comment_line)) (diagram_end)))
+
+(source_file
+  (uml_diagram
+    (diagram_start)
+    (comment
+      (comment_line))
+    (diagram_end)))
 
 ==================
 Diagram with string
@@ -54,7 +81,12 @@ Diagram with string
 "Hello World"
 @enduml
 ---
-(program (diagram (diagram_start) (string) (diagram_end)))
+
+(source_file
+  (uml_diagram
+    (diagram_start)
+    (raw_line)
+    (diagram_end)))
 
 ==================
 Diagram with title
@@ -63,7 +95,12 @@ Diagram with title
 title My Title
 @enduml
 ---
-(program (diagram (diagram_start) (title_inline) (diagram_end)))
+
+(source_file
+  (uml_diagram
+    (diagram_start)
+    (title_statement)
+    (diagram_end)))
 
 ==================
 Diagram with skinparam
@@ -72,7 +109,13 @@ Diagram with skinparam
 skinparam backgroundColor red
 @enduml
 ---
-(program (diagram (diagram_start) (style (style_inline (skinparam_keyword) (skinparam_name) (skinparam_value))) (diagram_end)))
+
+(source_file
+  (uml_diagram
+    (diagram_start)
+    (skinparam_statement
+      (identifier))
+    (diagram_end)))
 
 ==================
 Diagram with class definition
@@ -82,7 +125,14 @@ class Foo {
 }
 @enduml
 ---
-(program (diagram (diagram_start) (class_definition (class_keyword) (class_name) (class_body)) (diagram_end)))
+
+(source_file
+  (uml_diagram
+    (diagram_start)
+    (class_declaration
+      (identifier)
+      (entity_body))
+    (diagram_end)))
 
 ==================
 Diagram with object definition
@@ -91,7 +141,14 @@ Diagram with object definition
 object Foo
 @enduml
 ---
-(program (diagram (diagram_start) (object_definition (object_keyword) (object_name)) (diagram_end)))
+
+(source_file
+  (uml_diagram
+    (diagram_start)
+    (entity_declaration
+      (entity_kind)
+      (identifier))
+    (diagram_end)))
 
 ==================
 Diagram with activity keyword
@@ -100,7 +157,12 @@ Diagram with activity keyword
 start
 @enduml
 ---
-(program (diagram (diagram_start) (keyword) (diagram_end)))
+
+(source_file
+  (uml_diagram
+    (diagram_start)
+    (activity_control)
+    (diagram_end)))
 
 ==================
 Diagram with sequence divider
@@ -109,7 +171,12 @@ Diagram with sequence divider
 ====
 @enduml
 ---
-(program (diagram (diagram_start) (sequence (sequence_divider)) (diagram_end)))
+
+(source_file
+  (uml_diagram
+    (diagram_start)
+    (divider)
+    (diagram_end)))
 
 ==================
 Diagram with state concurrent
@@ -118,7 +185,12 @@ Diagram with state concurrent
 --
 @enduml
 ---
-(program (diagram (diagram_start) (state (state_concurrent)) (diagram_end)))
+
+(source_file
+  (uml_diagram
+    (diagram_start)
+    (state_concurrent)
+    (diagram_end)))
 
 ==================
 Diagram with preprocessing
@@ -127,7 +199,13 @@ Diagram with preprocessing
 !include common.iuml
 @enduml
 ---
-(program (diagram (diagram_start) (preprocessing) (diagram_end)))
+
+(source_file
+  (uml_diagram
+    (diagram_start)
+    (preprocessor_include
+      (label))
+    (diagram_end)))
 
 ==================
 Diagram with color
@@ -136,7 +214,12 @@ Diagram with color
 #FF0000
 @enduml
 ---
-(program (diagram (diagram_start) (color) (diagram_end)))
+
+(source_file
+  (uml_diagram
+    (diagram_start)
+    (raw_line)
+    (diagram_end)))
 
 ==================
 Diagram with identifier
@@ -145,7 +228,12 @@ Diagram with identifier
 foo_bar
 @enduml
 ---
-(program (diagram (diagram_start) (identifier) (diagram_end)))
+
+(source_file
+  (uml_diagram
+    (diagram_start)
+    (raw_line)
+    (diagram_end)))
 
 ==================
 Diagram with note
@@ -154,7 +242,14 @@ Diagram with note
 note left: This is a note
 @enduml
 ---
-(program (diagram (diagram_start) (note_inline) (diagram_end)))
+
+(source_file
+  (uml_diagram
+    (diagram_start)
+    (note_statement
+      (note_position)
+      (label))
+    (diagram_end)))
 
 ==================
 Diagram with caption
@@ -163,7 +258,12 @@ Diagram with caption
 caption This is a caption
 @enduml
 ---
-(program (diagram (diagram_start) (caption) (diagram_end)))
+
+(source_file
+  (uml_diagram
+    (diagram_start)
+    (caption_statement)
+    (diagram_end)))
 
 ==================
 Diagram with hide
@@ -172,4 +272,10 @@ Diagram with hide
 hide empty fields
 @enduml
 ---
-(program (diagram (diagram_start) (hide_show_remove) (diagram_end)))
+
+(source_file
+  (uml_diagram
+    (diagram_start)
+    (display_directive
+      (display_target))
+    (diagram_end)))

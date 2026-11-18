@@ -1,0 +1,66 @@
+==================
+Timing diagram
+==================
+@starttiming
+robust "Web Browser" as WB
+concise "Web User" as WU
+clock "CLK" as C with period 100 offset 20 pulse 30
+scale 1 as 10 pixels
+hide time axis
+use date format yyyy-mm-dd
+@0
+WB is Idle
+@100
+WB is Busy
+@200
+WU is Waiting
+WB -> WU : request
+constraint {100 ms}
+highlight 200
+note top of WB : hello
+@endtiming
+---
+
+(source_file
+  (timing_diagram
+    (diagram_start)
+    (timing_player_decl
+      name: (string)
+      alias: (identifier))
+    (timing_player_decl
+      name: (string)
+      alias: (identifier))
+    (timing_clock
+      name: (string)
+      alias: (identifier)
+      options: (label))
+    (timing_scale
+      value: (number)
+      pixels: (number))
+    (timing_directive)
+    (timing_directive
+      format: (label))
+    (timing_time)
+    (timing_state
+      player: (identifier)
+      value: (label))
+    (timing_time)
+    (timing_state
+      player: (identifier)
+      value: (label))
+    (timing_time)
+    (timing_state
+      player: (identifier)
+      value: (label))
+    (timing_message
+      left: (identifier)
+      right: (identifier)
+      label: (label))
+    (timing_constraint
+      text: (label))
+    (timing_highlight
+      text: (label))
+    (timing_note
+      text: (label))
+    (diagram_end)))
+

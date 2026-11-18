@@ -1,0 +1,41 @@
+==================
+Gantt task status and groups
+==================
+@startgantt
+Project starts 2024-01-01
+[Design] lasts 5 days
+[Build] starts at [Design]'s end
+[Build] is 50% completed {critical}
+group Release
+[Deploy] happens on 2024-02-01
+end group
+language en
+today is 2024-01-10
+@endgantt
+---
+
+(source_file
+  (gantt_diagram
+    (diagram_start)
+    (gantt_project_statement
+      date: (label))
+    (gantt_task
+      name: (gantt_task_name)
+      value: (label))
+    (gantt_task
+      name: (gantt_task_name)
+      value: (label))
+    (gantt_task
+      name: (gantt_task_name)
+      value: (label)
+      status: (gantt_status))
+    (gantt_group
+      label: (label)
+      (gantt_task
+        name: (gantt_task_name)
+        value: (label)))
+    (raw_line)
+    (gantt_today_statement
+      date: (label))
+    (diagram_end)))
+

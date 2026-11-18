@@ -1,0 +1,28 @@
+==================
+Flow diagram
+==================
+@startflow
+:Start;
+-> next;
+:Do work;
+if (ok?) then (yes)
+  :Done;
+endif
+@endflow
+---
+
+(source_file
+  (flow_diagram
+    (diagram_start)
+    (activity_action
+      (action_text))
+    (flow_link)
+    (activity_action
+      (action_text))
+    (if_block
+      condition: (condition)
+      label: (branch_label)
+      (activity_action
+        (action_text)))
+    (diagram_end)))
+

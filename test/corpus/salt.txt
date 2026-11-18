@@ -1,0 +1,32 @@
+==================
+Salt diagram
+==================
+@startsalt
+{
+  Login | "user"
+  Password | "****"
+  [Cancel] | [  OK  ]
+  [ ] Remember me
+  (X) Option A
+  ( ) Option B
+}
+@endsalt
+---
+
+(source_file
+  (salt_diagram
+    (diagram_start)
+    (salt_group
+      (salt_text)
+      (salt_text)
+      (salt_button
+        text: (label)
+        rest: (label))
+      (salt_checkbox
+        text: (label))
+      (salt_radio
+        text: (label))
+      (salt_radio
+        text: (label)))
+    (diagram_end)))
+

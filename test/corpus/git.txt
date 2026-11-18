@@ -1,0 +1,31 @@
+==================
+Git diagram
+==================
+@startgit
+* 1a2b3c4 (HEAD -> main, tag: v1) Initial commit
+* 5d6e7f8 Merge branch 'feature'
+| * 9a0b1c2 Feature work
+|/
+* 3c4d5e6 Base
+@endgit
+---
+
+(source_file
+  (git_diagram
+    (diagram_start)
+    (git_commit
+      hash: (git_hash)
+      refs: (git_refs
+        (git_ref)
+        (git_ref))
+      message: (label))
+    (git_commit
+      hash: (git_hash)
+      message: (label))
+    (git_graph_line)
+    (git_graph_line)
+    (git_commit
+      hash: (git_hash)
+      message: (label))
+    (diagram_end)))
+

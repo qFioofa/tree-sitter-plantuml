@@ -1,0 +1,24 @@
+==================
+Board diagram
+==================
+@startboard
++ Todo
+-- Task one
+-- Task two
++ Done
+-- Task three
+@endboard
+---
+
+(source_file
+  (board_diagram
+    (diagram_start)
+    (board_column
+      label: (label))
+    (board_card)
+    (board_card)
+    (board_column
+      label: (label))
+    (board_card)
+    (diagram_end)))
+

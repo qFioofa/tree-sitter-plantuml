@@ -1,0 +1,16 @@
+==================
+Ditaa diagram
+==================
+@startditaa
++--------+   +--------+
+| Client |-->| Server |
++--------+   +--------+
+@endditaa
+---
+
+(source_file
+  (ditaa_diagram
+    (diagram_start)
+    (ditaa_body)
+    (diagram_end)))
+

@@ -1,0 +1,27 @@
+==================
+Mindmap no-box and color
+==================
+@startmindmap
+*_ Root
+**[#red] Child
++ Left branch
+-- separator
+@endmindmap
+---
+
+(source_file
+  (mindmap_diagram
+    (diagram_start)
+    (mindmap_node
+      marker: (outline_marker)
+      text: (label))
+    (mindmap_node
+      marker: (outline_marker)
+      color: (outline_color)
+      text: (label))
+    (mindmap_node
+      marker: (outline_marker)
+      text: (label))
+    (outline_separator)
+    (diagram_end)))
+

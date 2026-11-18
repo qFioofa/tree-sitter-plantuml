@@ -1,0 +1,37 @@
+==================
+nwdiag diagram
+==================
+@startnwdiag
+network dmz {
+  address = "210.x.x.x/24"
+  web01 [address = "210.x.x.1", description = "web"]
+  web01 -- web02
+}
+group {
+  network lan {
+    address = "192.168.0.0/24"
+  }
+}
+@endnwdiag
+---
+
+(source_file
+  (nwdiag_diagram
+    (diagram_start)
+    (nwdiag_network
+      name: (identifier)
+      (nwdiag_element
+        value: (label))
+      (nwdiag_node
+        name: (identifier)
+        attributes: (label))
+      (nwdiag_link
+        left: (identifier)
+        right: (identifier)))
+    (nwdiag_group
+      (nwdiag_network
+        name: (identifier)
+        (nwdiag_element
+          value: (label))))
+    (diagram_end)))
+

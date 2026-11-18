@@ -1,0 +1,23 @@
+==================
+Chen ER diagram
+==================
+@startchen
+entity Customer
+attribute name
+relationship Buys
+Customer {1,N} Buys
+@endchen
+---
+
+(source_file
+  (chen_diagram
+    (diagram_start)
+    (chen_entity
+      name: (identifier))
+    (chen_attribute
+      name: (identifier))
+    (chen_relationship
+      name: (identifier))
+    (raw_line)
+    (diagram_end)))
+

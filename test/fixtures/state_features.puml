@@ -1,0 +1,43 @@
+@startuml
+state Start
+state "Long State" as LS
+state Start2 : entry / startAction
+state Start3 : exit / stopAction
+state Start4 : do / work
+state Start5 : description text
+state Composite {
+  state Inner
+  state "Deep" as D
+  [*] --> Inner
+  Inner --> [*]
+  Inner --> D : event
+  --
+  state Concurrent
+  state Choice <<choice>>
+  state Fork <<fork>>
+  state Join <<join>>
+  state End <<end>>
+  state StartState <<start>>
+}
+state "With stereotype" as WS <<stereotype>> #red [[http://example.com]]
+state LS2 as Alias2
+state Simple #blue
+state NoBody
+[*] --> Start
+Start --> Start2 : go
+Start2 --> [*]
+Start --> LS
+LS --> Composite
+Composite --> Start3
+Start4 --> Start5
+Start5 --> WS
+WS --> LS2
+LS2 --> Simple
+Simple --> NoBody
+NoBody --> [*]
+hide empty description
+hide empty members
+hide stereotype
+show empty fields
+remove @unlinked
+@enduml

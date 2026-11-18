@@ -1,0 +1,13 @@
+@startsalt
+{
+  Just plain text
+  [Button]
+  (Radio)
+  [ ] Checkbox
+  "Text field"
+  {SI
+    Username | "user"
+    Password | "****"
+  }
+}
+@endsalt

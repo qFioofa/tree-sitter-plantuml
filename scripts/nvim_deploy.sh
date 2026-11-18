@@ -73,7 +73,7 @@ mkdir -p "$(dirname "$PARSER_DST")" "$QUERY_DST" \
 install -m 0644 "$tmp_so" "$PARSER_DST"
 echo "  -> $PARSER_DST"
 
-for q in highlights injections locals tags; do
+for q in highlights injections locals tags folds indents textobjects context rainbow; do
 	src="$ROOT_DIR/queries/$q.scm"
 	[ -f "$src" ] && install -m 0644 "$src" "$QUERY_DST/$q.scm" && echo "  -> $QUERY_DST/$q.scm"
 done

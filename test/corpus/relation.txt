@@ -1,7 +1,3 @@
-================================================================================
-Relation Tests
-================================================================================
-
 ==================
 Simple association
 ==================
@@ -9,7 +5,15 @@ Simple association
 Foo --> Bar
 @enduml
 ---
-(program (diagram (diagram_start) (relation (identifier) (arrow) (identifier)) (diagram_end)))
+
+(source_file
+  (uml_diagram
+    (diagram_start)
+    (relation
+      (identifier)
+      (relation_operator)
+      (identifier))
+    (diagram_end)))
 
 ==================
 Relation with label
@@ -18,7 +22,16 @@ Relation with label
 Foo --> Bar : extends
 @enduml
 ---
-(program (diagram (diagram_start) (relation (identifier) (arrow) (identifier) (relation_label)) (diagram_end)))
+
+(source_file
+  (uml_diagram
+    (diagram_start)
+    (relation
+      (identifier)
+      (relation_operator)
+      (identifier)
+      (label))
+    (diagram_end)))
 
 ==================
 Inheritance arrow
@@ -27,7 +40,15 @@ Inheritance arrow
 A ..|> B
 @enduml
 ---
-(program (diagram (diagram_start) (relation (identifier) (arrow) (identifier)) (diagram_end)))
+
+(source_file
+  (uml_diagram
+    (diagram_start)
+    (relation
+      (identifier)
+      (relation_operator)
+      (identifier))
+    (diagram_end)))
 
 ==================
 Composition arrow
@@ -36,7 +57,15 @@ Composition arrow
 A *-- B
 @enduml
 ---
-(program (diagram (diagram_start) (relation (identifier) (arrow) (identifier)) (diagram_end)))
+
+(source_file
+  (uml_diagram
+    (diagram_start)
+    (relation
+      (identifier)
+      (relation_operator)
+      (identifier))
+    (diagram_end)))
 
 ==================
 Colored arrow with label
@@ -45,7 +74,16 @@ Colored arrow with label
 a -[#red]-> b : msg
 @enduml
 ---
-(program (diagram (diagram_start) (relation (identifier) (arrow) (identifier) (relation_label)) (diagram_end)))
+
+(source_file
+  (uml_diagram
+    (diagram_start)
+    (relation
+      (identifier)
+      (relation_operator)
+      (identifier)
+      (label))
+    (diagram_end)))
 
 ==================
 Sequence message
@@ -54,7 +92,16 @@ Sequence message
 Alice -> Bob : Hello
 @enduml
 ---
-(program (diagram (diagram_start) (relation (identifier) (arrow) (identifier) (relation_label)) (diagram_end)))
+
+(source_file
+  (uml_diagram
+    (diagram_start)
+    (relation
+      (identifier)
+      (relation_operator)
+      (identifier)
+      (label))
+    (diagram_end)))
 
 ==================
 Quoted operands
@@ -63,7 +110,15 @@ Quoted operands
 Foo --> "Bar Baz"
 @enduml
 ---
-(program (diagram (diagram_start) (relation (identifier) (arrow) (string)) (diagram_end)))
+
+(source_file
+  (uml_diagram
+    (diagram_start)
+    (relation
+      (identifier)
+      (relation_operator)
+      (string))
+    (diagram_end)))
 
 ==================
 State transition
@@ -72,4 +127,54 @@ State transition
 State1 --> State2 : event
 @enduml
 ---
-(program (diagram (diagram_start) (relation (identifier) (arrow) (identifier) (relation_label)) (diagram_end)))
+
+(source_file
+  (uml_diagram
+    (diagram_start)
+    (relation
+      (identifier)
+      (relation_operator)
+      (identifier)
+      (label))
+    (diagram_end)))
+
+==================
+Relation with cardinalities
+==================
+@startuml
+Foo "1" --> "*" Bar : uses
+@enduml
+---
+
+(source_file
+  (uml_diagram
+    (diagram_start)
+    (relation
+      (identifier)
+      (cardinality)
+      (relation_operator)
+      (cardinality)
+      (identifier)
+      (label))
+    (diagram_end)))
+
+==================
+Relation with cardinalities and roles
+==================
+@startuml
+Foo "1" /owner --> "*" /target Bar
+@enduml
+---
+
+(source_file
+  (uml_diagram
+    (diagram_start)
+    (relation
+      (identifier)
+      (cardinality)
+      (role)
+      (relation_operator)
+      (cardinality)
+      (role)
+      (identifier))
+    (diagram_end)))

@@ -1,0 +1,32 @@
+==================
+Requirement diagram
+==================
+@startuml
+requirement Req1 {
+  id: 1
+  text: The system shall work
+  risk: high
+  verifymethod: test
+}
+Req1 - satisfy -> Design
+@enduml
+---
+
+(source_file
+  (uml_diagram
+    (diagram_start)
+    (requirement_declaration
+      name: (identifier)
+      (requirement_field
+        value: (label))
+      (requirement_field
+        value: (label))
+      (requirement_field
+        value: (label))
+      (requirement_field
+        value: (label)))
+    (requirement_relation
+      left: (identifier)
+      right: (identifier))
+    (diagram_end)))
+

@@ -1,0 +1,24 @@
+==================
+Wire diagram
+==================
+@startwire
+component A
+component B
+link A -> B
+move A right
+@endwire
+---
+
+(source_file
+  (wire_diagram
+    (diagram_start)
+    (wire_component
+      name: (label))
+    (wire_component
+      name: (label))
+    (wire_command
+      value: (label))
+    (wire_command
+      value: (label))
+    (diagram_end)))
+

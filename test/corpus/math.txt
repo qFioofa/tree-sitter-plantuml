@@ -1,0 +1,15 @@
+==================
+Math diagram
+==================
+@startmath
+x = (-b +- sqrt(b^2 - 4ac)) / (2a)
+@endmath
+---
+
+(source_file
+  (math_diagram
+    (diagram_start)
+    body: (math_body
+      (raw_line))
+    (diagram_end)))
+

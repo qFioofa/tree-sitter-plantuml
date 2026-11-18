@@ -1,0 +1,12 @@
+@startmindmap
+* root
+** left child
+*** left grandchild
+** another left
++ right child
+++ right grandchild
+-- separator
+*: multiline node
+second line;
+** [color] colored
+@endmindmap

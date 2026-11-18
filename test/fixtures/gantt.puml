@@ -1,0 +1,20 @@
+@startgantt
+Project starts 2024-01-01
+[Task 1] starts 2024-01-01
+[Task 1] lasts 5 days
+[Task 2] starts at [Task 1]'s end
+[Task 2] lasts 10 days
+[Task 3] starts 2024-01-05
+[Task 3] ends 2024-01-15
+[Task 3] is colored in LightBlue
+[Task 1] -> [Task 2]
+[Task 2] -> [Task 3]
+[Task 4] happens on 2024-01-20
+[Task 4] is 50% completed
+[Task 5] is deleted
+-- separator
+... break ...
+2024-01-01 is colored in red
+today is 2024-01-10
+hide footbox
+@endgantt

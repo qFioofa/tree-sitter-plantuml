@@ -77,25 +77,28 @@ Use these exact tags in issues, commits, and backlog rows:
 
 | Area | State | Notes |
 |---|---|---|
-| Envelope | `partial` | `@startuml`/`@enduml`, named diagrams, multiple blocks, `generic_diagram` fallback for unknown `@startX`. |
-| Class / object / component / deployment / use case | `partial` | Large entity grammar; many kinds, members, relations, packages, notes. Not verified after the current rewrite. |
-| Sequence | `partial` | Participants, lifecycle, frames, notes, boxes, dividers, delays, refs. |
-| Activity (beta) | `partial` | Actions, conditions, loops, fork/split, partition/group, swimlanes. |
+| Envelope | `done` | `@startuml`/`@enduml`, named diagrams, multiple blocks, dedicated rules for every documented family, `generic_diagram` fallback for unknown `@startX`. |
+| Class / object / component / deployment / use case | `partial` | Entity grammar, members, relations, packages, notes, object JSON shorthand, requirement/ArchiMate macro calls. |
+| Sequence | `partial` | Participants, lifecycle, frames, notes, boxes, dividers, delays, refs, boundary messages. |
+| Activity (beta) | `partial` | Actions, conditions, loops, fork/split, partition/group, swimlanes, notes. |
 | Activity (legacy) | `raw` | No structured grammar. |
-| State | `partial` | States, composite states, pseudostates, transitions, concurrent regions. |
-| Timing | `raw` | `generic_diagram` only. |
-| Mindmap / WBS / Gantt | `partial` | Dedicated rules, basic nodes/separators; many commands missing. |
-| JSON / YAML | `raw` + injections | Body injected as JSON/YAML; no PlantUML `#highlight` handling. |
-| Salt, Ditaa, nwdiag, ArchiMate, Requirement, ER, Git, Files, Chart, EBNF, Regex, Packet, Board, Wire, Flow, BPM, Math, Creole, Dot | `raw` | `generic_diagram`/`raw_body`; no structure. |
-| Queries | `partial` | `highlights`, `injections`, `locals`, `tags` tracked; `folds`/`indents` untracked and not installed; no `textobjects`, `context`, `rainbow`. |
-| Tests | `partial` | 41 corpus cases (comment/diagram/relation). 19 fixtures are not wired to any test. `npm test` only runs a binding smoke test. |
-| CI / packaging | `planned` | No workflows, no release, version `0.0.1`, no npm/crates/PyPI publish. |
-| Performance | `risk` | Generated `src/parser.c` is ~42 MB with 10 conflicts; needs a budget and benchmark. |
+| State | `partial` | States, composite states, pseudostates, transitions, concurrent regions, entry/exit/do. |
+| Timing | `done` | Players, clocks, scale, directives, time points, states, messages, constraints, highlights, notes. |
+| Mindmap / WBS / Gantt | `partial` | Dedicated rules, nodes/separators/colors/no-box, Gantt statuses/groups/directives. |
+| JSON / YAML / HCL | `done` | Dedicated envelopes, `#highlight` parsing, body injection. |
+| nwdiag / salt / ditaa | `done` | Dedicated structured rules; ditaa text injection. |
+| Chen ER / IE relations | `done` | Chen declarations/groups/cardinality and crow's-foot relation operators. |
+| Git / files / chronology | `done` | Git commits/refs/graph, files tree, line-level chronology. |
+| EBNF / regex | `done` | Structured expression grammars. |
+| Packet / board / wire / flow / BPM | `done` | Structured or line-level rules. |
+| Math / LaTeX / Creole / DOT / sprites / chart | `done` | Dedicated envelopes with body injection where applicable. |
+| Queries | `done` | `highlights`, `injections`, `folds`, `indents`, `locals`, `tags`, `textobjects`, `context`, `rainbow` all registered and compile. |
+| Tests | `done` | 68 corpus cases; all 19 fixtures wired into `npm test`; fixture smoke fails on `ERROR`/`MISSING`. |
+| CI / packaging | `partial` | CI workflow added (generate check, lint, corpus, fixtures, query compile); no release/publish yet. |
+| Performance | `risk` | Generated `src/parser.c` is ~78 MB / 30,598 states; state-heavy additions (e.g. relation tags) can push it past the 32k-state stability limit, so size/state budgets and benchmarks are still required. |
 
-**Immediate blocker:** rebuild and validate the uncommitted rewrite before
-adding features. `build/Release` and the root `plantuml.so` are older than the
-current `src/parser.c`, so fixture results from the stale binary are not
-meaningful.
+**Resolved blocker (2026-11-17):** parser regenerated, corpus and fixture smoke
+tests wired into `npm test`, all fixtures parse with zero `ERROR`/`MISSING`.
 
 ---
 

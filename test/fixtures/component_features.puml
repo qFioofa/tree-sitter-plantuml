@@ -1,0 +1,72 @@
+@startuml
+[Shorthand Component]
+[Shorthand2] as SC2
+[Shorthand3] as SC3 #red
+component Component
+component "Long Component" as C2
+component [Bracketed] as C3
+component C4 <<stereotype>> #blue $tag [[link]] order 5
+node Node
+node "Long Node" as N2
+node N3 <<node>> #green
+artifact Artifact
+artifact "Long Artifact" as A2
+folder Folder
+folder "Long Folder" as F2
+frame Frame
+frame "Long Frame" as Fr2
+cloud Cloud
+cloud "Long Cloud" as Cl2
+database Database
+database "Long Database" as D2
+queue Queue
+queue "Long Queue" as Q2
+stack Stack
+stack "Long Stack" as S2
+storage Storage
+file File
+file "Long File" as File2
+rectangle Rectangle
+rectangle "Long Rectangle" as R2
+card Card
+card "Long Card" as Card2
+agent Agent
+agent "Long Agent" as Agent2
+actor Actor
+actor "Long Actor" as Actor2
+usecase UseCase
+usecase (UseCaseRef)
+usecase "Long UseCase" as U2
+boundary Boundary
+control Control
+collections Collections
+entity Entity
+participant Participant
+object Object
+object "Long Object" as O2
+object O3 {
+  name : "value"
+  +field : int
+}
+package "Package" as Pkg #EEE {
+  component Nested
+}
+package Pkg2 <<frame>> {
+  class InPkg
+}
+namespace "Namespace" as Ns {
+  class InNs
+}
+rectangle "Parent" {
+  rectangle "Child"
+}
+component WithPorts {
+  port in1
+  portout out1 #red
+}
+[Shorthand Component] --> Component : uses
+Component --> [Shorthand2]
+Component ..> Node : depends
+Actor --> (UseCaseRef)
+UseCase --> Actor
+@enduml

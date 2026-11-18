@@ -1,0 +1,109 @@
+@startuml
+participant Participant
+actor Actor
+boundary Boundary
+control Control
+entity Entity
+database DB
+collections Coll
+queue Queue
+participant "Long name" as P2 #red
+participant P3 <<stereotype>> #blue order 10
+participant Multi [
+  =Title
+  ----
+  ""SubTitle""
+]
+actor "Long Actor" as A2
+database "Long DB" as D2
+autoactivate on
+autonumber
+autonumber 10
+autonumber 10 10
+autonumber stop
+autonumber resume
+autonumber 10 10 "<b>0"
+activate Participant
+deactivate Participant
+destroy Participant
+create Participant
+create participant P4
+create actor A3
+create database D3
+return ok
+return
+[-> Actor : incoming
+Actor ->] : outgoing
+[o-> Actor : incoming circle
+Actor ->o] : outgoing circle
+[?-> Actor : incoming question
+Actor ->?] : outgoing question
+Actor -> Participant : hello
+Actor --> Participant : dotted
+Actor ->> Participant : thin
+Actor -->> Participant : dotted thin
+Actor ->x Participant : lost
+Actor ->o Participant : circle
+Actor <- Participant : reply
+Participant --> Actor : reply dotted
+Actor -> Actor : self
+A2 -> B2 : unknown
+alt success
+  Actor -> Participant : ok
+else failure
+  Actor -> Participant : fail
+end
+opt optional
+  Actor -> Participant
+end
+loop 10 times
+  Actor -> Participant
+end
+par parallel
+  Actor -> Participant
+else other
+  Actor -> Participant
+end
+break broken
+  Actor -> Participant
+end
+critical critical
+  Actor -> Participant
+end
+group group label
+  Actor -> Participant
+end
+group MyLabel [Secondary Label]
+  Actor -> Participant
+end
+box "Group" #lightblue
+participant Boxed
+end box
+box
+participant Boxed2
+end box
+mainframe This is mainframe
+ref over Actor, Participant : reference text
+ref over Actor
+raw reference line
+end ref
+note left of Actor : left note
+note right of Actor : right note
+note top of Actor : top note
+note bottom of Actor : bottom note
+note over Actor, Participant : over note
+note over Actor
+multi note line
+end note
+note across : across note
+note as N
+floating note
+end note
+note "inline" as N2
+hnote over Actor : hex note
+rnote over Actor : round note
+|||
+||20||
+...5 minutes later...
+== divider ==
+@enduml

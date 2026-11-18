@@ -1,0 +1,22 @@
+==================
+HCL diagram
+==================
+@starthcl
+#highlight "name"
+name = "Alice"
+server {
+  port = 8080
+  enabled = true
+}
+@endhcl
+---
+
+(source_file
+  (hcl_diagram
+    (diagram_start)
+    (hcl_highlight
+      path: (string))
+    (hcl_content)
+    (hcl_content)
+    (diagram_end)))
+
